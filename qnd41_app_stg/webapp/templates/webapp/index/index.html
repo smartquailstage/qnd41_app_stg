@@ -1,0 +1,13 @@
+{% extends "webapp/base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load widget_tweaks %}
+{% load webapp_0_tags %}
+{% load static %}
+
+{% block content %}
+
+{% include 'webapp/index/header.html' %}
+{% include 'webapp/index/slider_section.html' %}
+{% include 'webapp/index/footer_section.html' %}
+
+{% endblock %}
