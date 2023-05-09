@@ -2,6 +2,7 @@
 {% load widget_tweaks %}
 {% load webapp_0_tags %}
 {% load static %}
+{% load menu_tags %}
 
 
 
@@ -24,10 +25,11 @@
       <!--=== Start Atribute Navigation ===-->
       <div class="attr-nav">
         <ul>
+          {% for item in menu_items %}  
           <li class="dropdown"> <a href="index.html#" class="dropdown-toggle" data-toggle="dropdown" > <i class="icofont icofont-cart"></i> <span class="badge">3</span> </a>
             <ul class="dropdown-menu cart-list">
-              <li> <a href="index.html#" class="photo"><img src="{% static 'assets/images/thumb01.jpg' %}" class="cart-thumb" alt="" /></a>
-                <h6><a href="index.html#">Delica omtantur </a></h6>
+              <li> <a href="{{ item.href }}" class="photo"><img src="{% static 'assets/images/thumb01.jpg' %}" class="cart-thumb" alt="" /></a>
+                <h6><a href="{{ item.href }}">{{ item.text }} </a></h6>
                 <p>2x - <span class="price">$99.99</span></p>
               </li>
               <li> <a href="index.html#" class="photo"><img src="{% static 'assets/images/thumb02.jpg' %}" class="cart-thumb" alt="" /></a>
@@ -41,15 +43,17 @@
               <li class="total"> <span class="pull-right"><strong>Total</strong>: $0.00</span> <a href="index.html#" class="btn btn-default btn-cart">Cart</a> </li>
             </ul>
           </li>
+          {% endfor %}
           <li class="search"><a href="index.html#" id="search-button"><i class="icofont icofont-search-1"></i></a></li>
         </ul>
+
       </div>
       <!--=== End Atribute Navigation ===-->
 
       <!--=== Start Header Navigation ===-->
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu"> <i class="icofont icofont-navigation-menu"></i> </button>
-        <div class="logo"> <a href="index.html"> <img class="logo logo-display" width="330px" height="1024px" src="{% static 'assets/images/logo_smartquailWhite.png' %}" alt=""> <img class="logo logo-scrolled" src="assets/images/logo-black.png" alt=""> </a> </div>
+        <div class="logo"> <a href="index.html"> <img class="logo logo-display" src="{% static 'assets/images/logo_smartquailWhite.png' %}" alt=""> <img class="logo logo-scrolled" width="250px" height="100px" src="{% static 'img/logo_smartquailgray.png' %}" alt=""> </a> </div>
       </div>
       <!--=== End Header Navigation ===-->
 
@@ -64,7 +68,9 @@
                     <h6 class="title">Home Layouts</h6>
                     <div class="content">
                       <ul class="menu-col">
-                        <li><a href="index.html">Creative Agency</a></li>
+                        {% for item in menu_items %} 
+                        <li><a href="index.html">{{ item.text }}</a></li>
+                        {% endfor %}
 <li><a href="design-studio.html">Design Studio</a></li>
 <li><a href="digital-marketing.html">Digital Marketing</a></li>
                         <li><a href="small-business.html">Small Business</a></li>

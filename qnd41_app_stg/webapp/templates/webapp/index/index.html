@@ -3,10 +3,11 @@
 {% load widget_tweaks %}
 {% load webapp_0_tags %}
 {% load static %}
+{% load menu_tags %}
 
 {% block content %}
 
-{% include 'webapp/index/header.html' %}
+{% main_menu template="webapp/index//header.html" %}
 {% include 'webapp/index/slider_section.html' %}
 {% include 'webapp/index/footer_section.html' %}
 

@@ -70,6 +70,8 @@ INSTALLED_APPS = [
     'wagtail.documents',
     'wagtail.images',
     'wagtail.search',
+    "wagtail_localize",
+    "wagtail_localize.locales", 
 
     'wagtail.admin',
     'wagtail.core',
@@ -79,6 +81,7 @@ INSTALLED_APPS = [
     'wagalytics',
     'wagtailfontawesome',
     'wagtailgmaps',
+    'wagtailmenus',
     #'django_social_share',
     'taggit',
     'django_social_share',
@@ -106,6 +109,7 @@ INSTALLED_APPS = [
     'qr_code',
     'storages',
     'actions',
+    
     'baton.autodiscover',   
     #'memcache_status',
     'webapp',
@@ -237,6 +241,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'wagtailmenus.context_processors.wagtailmenus',
             ],
         },
     },
@@ -282,7 +287,17 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+WAGTAIL_CONTENT_LANGUAGES = LANGUAGES = [
+    ('en', "English"),
+    ('fr', "French"),
+    ('es', "Spanish"),
+]
+
+WAGTAIL_I18N_ENABLED = True
+
+USE_L10N = True
+
+LANGUAGE_CODE = 'es'
 
 TIME_ZONE = 'UTC'
 

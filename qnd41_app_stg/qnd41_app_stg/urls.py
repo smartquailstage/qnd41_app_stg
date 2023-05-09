@@ -11,9 +11,11 @@ from wagtail.core import urls as wagtail_urls
 from wagtail.documents import urls as wagtaildocs_urls
 from qr_code import urls as qr_code_urls
 
+from django.conf.urls.i18n import i18n_patterns
+
 from django.conf.urls.static import static
 
-urlpatterns = [
+urlpatterns = i18n_patterns (
     path('smartbusinessanalytics/', admin.site.urls),
     path('baton/', include('baton.urls')),
     #path('Orders/', include('orders.urls', namespace='orders')),
@@ -41,7 +43,7 @@ urlpatterns = [
     re_path(r'^documents/', include(wagtaildocs_urls)),
     re_path(r'', include(wagtail_urls)),
 
- ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
+ ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
