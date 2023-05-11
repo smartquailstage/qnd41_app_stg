@@ -2,6 +2,7 @@
 {% load widget_tweaks %}
 {% load webapp_0_tags %}
 {% load static %}
+{% load menu_tags %}
   
   
   <!--=== Footer Start ===-->
@@ -11,42 +12,40 @@
         <div class="row">
           <div class="col-sm-6 col-md-4">
             <div class="widget widget-text">
-              <div class="logo logo-footer"><a href="index.html"> <img class="logo logo-display" src="assets/images/logo-footer.png" alt=""></a> </div>
-              <p>We are a fully in-house digital agency focusing on branding, marketing, web design and development with clients ranging from start-ups, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed varius quam ut magna ultricies pellentesque.</p>
+              <div class="logo logo-footer"><a href="index.html"> <img class="logo logo-display" src="{% static 'img/logo_smartquailWhite.png' %}" alt=""></a> </div>
+              <p>{{page.bio | richtext }}</p>
             </div>
           </div>
           <div class="col-sm-6 col-md-2">
             <div class="widget widget-links">
-              <h5 class="widget-title">Work With Us</h5>
+              {% workwithus_menus as menus %}
+              {% for menu in menus %}
+              <h5 class="widget-title">{{menu.heading}}</h5>
               <ul>
-                <li><a href="index.html#">Themeforest</a></li>
-                <li><a href="index.html#">Audio Jungle</a></li>
-                <li><a href="index.html#">Code Canyon</a></li>
-                <li><a href="index.html#">Video Hive</a></li>
-                <li><a href="index.html#">Envato Market</a></li>
+              {% flat_menu menu.handle template="webapp/index/footer/workwithus.html" %}
               </ul>
+              {% endfor %}
             </div>
           </div>
           <div class="col-sm-6 col-md-2">
             <div class="widget widget-links">
-              <h5 class="widget-title">Useful Links</h5>
+              {% usefullinks_menus as menus %}
+              {% for menu in menus %}
+              <h5 class="widget-title">{{menu.heading}}</h5>
               <ul>
-                <li><a href="about-us.html">About Us</a></li>
-                <li><a href="contact-simple.html">Contact Us</a></li>
-                <li><a href="service-simple.html">Our Services</a></li>
-                <li><a href="term-condition.html">Terms &amp; Conditions</a></li>
-                <li><a href="career.html">Careers</a></li>
+              {% flat_menu menu.handle template="webapp/index/footer/usefullinks.html" %}
               </ul>
+              {% endfor %}
             </div>
           </div>
           <div class="col-sm-6 col-md-4">
             <div class="widget widget-text widget-links">
               <h5 class="widget-title">Contact Us</h5>
               <ul>
-                <li> <i class="icofont icofont-google-map"></i> <a href="index.html#">Park Lane Llandrindod Wells, LD7 9QW</a> </li>
-                <li> <i class="icofont icofont-iphone"></i> <a href="index.html#">+44 1632 960290</a> </li>
-                <li> <i class="icofont icofont-mail"></i> <a href="index.html#">helloscoda@gmail.com</a> </li>
-                <li> <i class="icofont icofont-globe"></i> <a href="index.html#">www.envato.com</a> </li>
+                <li> <i class="icofont icofont-google-map"></i> <a href="index.html#">Francisco Salazar E14-19, Quito-Ecuador</a> </li>
+                <li> <i class="icofont icofont-iphone"></i> <a href="index.html#">+593 963 52162</a> </li>
+                <li> <i class="icofont icofont-mail"></i> <a href="index.html#">info@smartquail.io</a> </li>
+                <li> <i class="icofont icofont-globe"></i> <a href="index.html#">www.smartquail.io</a> </li>
               </ul>
             </div>
           </div>
@@ -58,6 +57,7 @@
         <div class="row">
           <div class="col-md-6 col-xs-12">
             <ul class="social-media">
+              <li><img src="{% static 'img/logo.png' %}" width="35px"></li>
               <li><a href="index.html#" class="icofont icofont-link-altedin"></a></li>
               <li><a href="index.html#" class="icofont icofont-facebook"></a></li>
               <li><a href="index.html#" class="icofont icofont-twitter"></a></li>
@@ -66,7 +66,7 @@
             </ul>
           </div>
           <div class="col-md-6 col-xs-12">
-            <div class="copy-right text-right">© 2022 Scoda. All rights reserved</div>
+            <div class="copy-right text-right">© 2023 SmartQuail.S.A.S All rights reserved</div>
           </div>
         </div>
       </div>

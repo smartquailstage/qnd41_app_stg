@@ -47,12 +47,12 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'baton',
     'account',
+    'django.contrib.sites',
     #'courses',
     #'courses_exams',
     #'card_test',
     #'thumbnails',
     #'cart',
-   
     'django.contrib.contenttypes',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -70,11 +70,11 @@ INSTALLED_APPS = [
     'wagtail.documents',
     'wagtail.images',
     'wagtail.search',
-    "wagtail_localize",
-    "wagtail_localize.locales", 
-
-    'wagtail.admin',
     'wagtail.core',
+    #'wagtail.locales',
+    'wagtail_localize.locales', 
+    'wagtail.contrib.simple_translation',
+    'wagtail.admin',
     'wagtail.contrib.settings',
     'wagtail.contrib.routable_page',
     'wagtail.contrib.modeladmin',
@@ -130,6 +130,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware'
+    
     #'wagtail.core.middleware.SiteMiddleware',
     #'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 ]
@@ -151,6 +153,7 @@ GA_VIEW_ID = os.environ.get('GA_VIEW_ID_ENV')
 
 WAGTAIL_SITE_NAME = 'Smart Business Media'
 
+
 #RESTFRAMEWORK
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
@@ -160,7 +163,7 @@ REST_FRAMEWORK = {
 
 #Redis Setup
 
-
+SITE_ID = 1
 
 
 REDIS_HOST=os.environ.get('REDIS_HOST')
@@ -242,6 +245,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'wagtailmenus.context_processors.wagtailmenus',
+                'django.template.context_processors.i18n',
             ],
         },
     },

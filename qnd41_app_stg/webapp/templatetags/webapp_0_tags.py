@@ -1,6 +1,7 @@
 from django import template
 from django.template.loader import get_template
-
+from django.template.defaultfilters import stringfilter
+from wagtailmenus.models import FlatMenu
 register = template.Library()
  
 @register.tag
@@ -114,3 +115,107 @@ class footerNode(template.Node):
     def render(self, context):
         output = self.nodelist.render(context)
         return output
+    
+#Menus
+#Products
+
+@register.simple_tag
+def smartbusinessmedia_menus():
+    return FlatMenu.objects.filter(handle__endswith='smartbusinessmedia')
+
+@register.simple_tag
+def smartbusinessanalytics_menus():
+    return FlatMenu.objects.filter(handle__endswith='smartbusinessanalytics')
+
+@register.simple_tag
+def smartbusinesstechnologies_menus():
+    return FlatMenu.objects.filter(handle__endswith='smartbusinesstechnologies')
+
+@register.simple_tag
+def smartbusinesslaw_menus():
+    return FlatMenu.objects.filter(handle__endswith='smartbusinesslaw')
+
+#solutions
+
+@register.simple_tag
+def bycategory_menus():
+    return FlatMenu.objects.filter(handle__endswith='bycategory')
+
+@register.simple_tag
+def byorganizationtype_menus():
+    return FlatMenu.objects.filter(handle__endswith='byorganizationtype')
+
+@register.simple_tag
+def bycustomer_menus():
+    return FlatMenu.objects.filter(handle__endswith='bycustomer')
+
+#training&jobs
+
+@register.simple_tag
+def training_menus():
+    return FlatMenu.objects.filter(handle__endswith='training')
+
+@register.simple_tag
+def jobs_menus():
+    return FlatMenu.objects.filter(handle__endswith='jobs')
+
+#Resources
+
+@register.simple_tag
+def ourvision_menus():
+    return FlatMenu.objects.filter(handle__endswith='ourvision')
+
+@register.simple_tag
+def topics_menus():
+    return FlatMenu.objects.filter(handle__endswith='topics')
+
+@register.simple_tag
+def articles_menus():
+    return FlatMenu.objects.filter(handle__endswith='articles')
+
+@register.simple_tag
+def news_menus():
+    return FlatMenu.objects.filter(handle__endswith='news')
+
+#parthers
+
+@register.simple_tag
+def forcustomers_menus():
+    return FlatMenu.objects.filter(handle__endswith='forcustomers')
+
+@register.simple_tag
+def forpartners_menus():
+    return FlatMenu.objects.filter(handle__endswith='forpartners')
+
+#about
+
+@register.simple_tag
+def aboutus_menus():
+    return FlatMenu.objects.filter(handle__endswith='aboutus')
+
+@register.simple_tag
+def opensource_menus():
+    return FlatMenu.objects.filter(handle__endswith='opensource')
+@register.simple_tag
+def companydetails_menus():
+    return FlatMenu.objects.filter(handle__endswith='companydetails')
+
+@register.simple_tag
+def communities_menus():
+    return FlatMenu.objects.filter(handle__endswith='communities')
+
+
+#footer
+
+@register.simple_tag
+def workwithus_menus():
+    return FlatMenu.objects.filter(handle__endswith='workwithus')
+
+@register.simple_tag
+def usefullinks_menus():
+    return FlatMenu.objects.filter(handle__endswith='usefullinks')
+
+@register.simple_tag
+def contactus_menus():
+    return FlatMenu.objects.filter(handle__endswith='contactus')
+
