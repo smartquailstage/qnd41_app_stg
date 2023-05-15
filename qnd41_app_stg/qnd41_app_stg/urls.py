@@ -18,16 +18,17 @@ from django.conf.urls.static import static
 urlpatterns = i18n_patterns (
     path('smartbusinessanalytics/', admin.site.urls),
     path('baton/', include('baton.urls')),
-    #path('Orders/', include('orders.urls', namespace='orders')),
+    path('Orders/', include('orders.urls', namespace='orders')),
     #path('Contracts/', include('contracts.urls', namespace='contracts')),
     #path('services/', include('services.urls', namespace="services")),
     path('qr-code/', include(qr_code_urls, namespace="qr_code")),
+    path ('rosetta/', include('rosetta.urls')),
     #E-commerce-configs
     #path('coupons/', include('coupons.urls', namespace='coupons')),
-    #path('cart/', include('cart.urls', namespace='cart')),
+    path('cart/', include('cart.urls', namespace='cart')),
     #path('orders/', include('orders.urls', namespace='orders')),
     #path('payment/', include('payment.urls', namespace='payment')),
-    #path('shop/', include('shop.urls', namespace='shop')),
+    path('shop/', include('shop.urls', namespace='shop')),
     #Eduaction Platform
    # path('account/', include('account.urls')),
     #path('account/login/', auth_views.LoginView.as_view(), name='login'),
@@ -42,6 +43,7 @@ urlpatterns = i18n_patterns (
     re_path(r'^smartbusinessmedia/', include(wagtailadmin_urls),name='wagtail'),
     re_path(r'^documents/', include(wagtaildocs_urls)),
     re_path(r'', include(wagtail_urls)),
+    
 
  ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
 

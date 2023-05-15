@@ -55,7 +55,7 @@
           color: $collapse-entry-icon-color;
           content: '\f070';
           cursor: pointer;
-          font-family: 'Font Awesome\ 5 Free';
+          font-family: 'Font Awesome\ 6 Free';
         }
 
         & + span {
@@ -64,7 +64,7 @@
       }
 
       &.entry-collapsed {
-        + fieldset {
+        ~ fieldset {
           display: none !important;
         }
 
@@ -86,7 +86,7 @@
         }
       }
 
-      + fieldset {
+      ~ fieldset {
         display: none !important;
       }
 
@@ -97,7 +97,7 @@
           }
         }
 
-        + fieldset {
+        ~ fieldset {
           display: block !important;
         }
       }

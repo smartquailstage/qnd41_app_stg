@@ -38,6 +38,7 @@ django-rosetta
 wagtail-localize
 
 
+
 boto3
 #System HOST
 PyOpenSSL

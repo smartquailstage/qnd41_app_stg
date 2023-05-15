@@ -46,6 +46,7 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'baton',
+     
     'account',
     'django.contrib.sites',
     #'courses',
@@ -61,6 +62,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #Wagtail Inicials
     'core',
+    'wagtail.locales',
+    #'wagtail_localize.locales',
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
     'wagtail.embeds',
@@ -71,8 +74,8 @@ INSTALLED_APPS = [
     'wagtail.images',
     'wagtail.search',
     'wagtail.core',
+     
     #'wagtail.locales',
-    'wagtail_localize.locales', 
     'wagtail.contrib.simple_translation',
     'wagtail.admin',
     'wagtail.contrib.settings',
@@ -115,6 +118,8 @@ INSTALLED_APPS = [
     'webapp',
     'rest_framework',
     'ckeditor',
+    'rosetta',
+    
 ]
 
 
@@ -244,8 +249,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'wagtailmenus.context_processors.wagtailmenus',
                 'django.template.context_processors.i18n',
+                'wagtailmenus.context_processors.wagtailmenus',
+               
             ],
         },
     },
@@ -290,6 +296,10 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale/'),
+)
 
 WAGTAIL_CONTENT_LANGUAGES = LANGUAGES = [
     ('en', "English"),
