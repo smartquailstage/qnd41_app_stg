@@ -46,3 +46,4 @@ python-dotenv==0.21.0
 #Ecommerce
 braintree
 weasyprint
+wagtailmenus
