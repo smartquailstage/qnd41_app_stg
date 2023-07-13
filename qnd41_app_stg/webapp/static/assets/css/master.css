@@ -1165,7 +1165,7 @@ input.search-bar-top:-moz-placeholder { color: #fff!important; }
 .border-radius-25 {border-radius:25px;}
 .remove-padding {padding: 0!important;}
 .remove-margin {margin: 0!important;}
-.img-responsive, .full-width{width:100%;}
+.img-responsive, .full-width{width:100%; border-radius: 25px;}
 
 .btn,
 .form-control,
@@ -4879,9 +4879,6 @@ ul.footer-gallery li img {
 	height:100%;
 }
 
-.widget-cover-bg {
-	background-image: url("http://www.incognitothemes.com/scoda/assets/images/title-bg/title-hero-9.jpg");
-}
 
 .shop-cover-bg {
 	background-image: url("http://www.incognitothemes.com/scoda/assets/images/title-bg/title-hero-10.jpg");

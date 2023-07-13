@@ -33,11 +33,11 @@ from wagtail.contrib.settings.models import BaseSetting, register_setting
 from django.urls import reverse
 
 
+# pagina de inicio
+class consultashome(AbstractFormField):
+    page = ParentalKey('home', on_delete=models.CASCADE, related_name='form_fields')
 
-
-
-
-class home(Page):
+class home(AbstractEmailForm):
     # Empieza Barner de Inicio
     template = "webapp/home/home.html"
     #cliente_Navbar = RichTextField(blank=True,verbose_name='Cliente-url')
@@ -94,10 +94,10 @@ class home(Page):
     product_6 = models.CharField(max_length=150, null=True, blank=True,verbose_name='Product-6')
     product_description_6 = models.CharField(max_length=150, null=True, blank=True,verbose_name='Descripcion Product-6')
     # Banner contador
-    numero_coffe = models.DecimalField(max_digits=10, decimal_places=2,null=True)
-    numero_experiencia = models.DecimalField(max_digits=10, decimal_places=2,null=True)
-    numero_horas = models.DecimalField(max_digits=10, decimal_places=2,null=True)
-    numero_wins = models.DecimalField(max_digits=10, decimal_places=2,null=True)
+    numero_coffe = models.IntegerField( null=True)
+    numero_experiencia =  models.IntegerField( null=True)
+    numero_horas = models.IntegerField( null=True)
+    numero_wins = models.IntegerField(null=True)
 
 
     team_1 = models.CharField(max_length=150, null=True, blank=True,verbose_name='team-1')
@@ -185,14 +185,25 @@ class home(Page):
 
 #panel 
         FieldPanel('consulta', classname="full"),
+
         InlinePanel('galleria', label="Imagen de Fondo Barner"),
+        FormSubmissionsPanel(),
+        InlinePanel('form_fields', label="consultashome"),
+        FieldPanel('thank_you_text', classname="full"),
+        MultiFieldPanel([
+            FieldRowPanel([
+                FieldPanel('from_address', classname="col6"),
+                FieldPanel('to_address', classname="col6"),
+            ]),
+            FieldPanel('subject'),
+        ], "Email"),
 #Panel capo de noticas
         FieldPanel("custom_title"),
     ]
 
 
 
-class GaleriadeImagenes(Orderable):
+class GaleriaHome(Orderable):
     page = ParentalKey(home, on_delete=models.CASCADE, related_name='galleria')
     logo = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Logotipo SmartQuail')
     profile_pic = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Foto de perfil')
@@ -391,7 +402,7 @@ class smartbusinessmedia(AbstractEmailForm):
 #panel 
         FieldPanel('consulta', classname="full"),
 
-        InlinePanel('galleria', label="Imagen de Fondo Barner"),
+        InlinePanel('galleria_2', label="Imagen de Fondo Barner"),
         FormSubmissionsPanel(),
         InlinePanel('form_fields', label="consultas"),
         FieldPanel('thank_you_text', classname="full"),
@@ -409,7 +420,7 @@ class smartbusinessmedia(AbstractEmailForm):
 
 
 class GaleriadeImagenesSBM(Orderable):
-    page = ParentalKey(smartbusinessmedia, on_delete=models.CASCADE, related_name='galleria')
+    page = ParentalKey(smartbusinessmedia, on_delete=models.CASCADE, related_name='galleria_2')
     logo = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Logotipo SmartQuail')
     profile_pic = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Foto de perfil')
     image = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Imagen Slide Banner 1')
@@ -496,3 +507,151 @@ class Product(models.Model):
     def get_absolute_url(self):
             return reverse('shop:product_detail',
                            args=[self.id, self.slug])
+
+
+
+
+class info(Page):
+    # Empieza Barner de Inicio
+    template = "webapp/info.html"
+    #cliente_Navbar = RichTextField(blank=True,verbose_name='Cliente-url')
+    
+   # banner_title1 = RichTextField(blank=True,verbose_name='Titulo del primer banner ')
+   # banner_info1 = RichTextField(blank=True,verbose_name='Informacion del primer banner ')
+   # banner_title2 = RichTextField(blank=True,verbose_name='Titulo del segundo banner ')
+   # banner_info2 = RichTextField(blank=True,verbose_name='Informacion del segundo banner ')
+   # banner_title3 = RichTextField(blank=True,verbose_name='Titulo del tercer banner ')
+   # banner_info3 = RichTextField(blank=True,verbose_name='Informacion del tercer banner ')
+
+    # Empieza Banner de sliders
+    bio2 = RichTextField(blank=True,verbose_name='Resumen de Proyecto')
+
+    banner_title4 = RichTextField(blank=True,verbose_name='Titulo de galeria-1 ')
+    TS_info1 = models.CharField(max_length=150, null=True, blank=True,verbose_name='Tipo de producto')
+    TS_info2 = models.CharField(max_length=150, null=True, blank=True,verbose_name='Tipo de Plan')
+    info3 = models.CharField(max_length=150, null=True, blank=True,verbose_name='Costo de Producto')
+
+    TS_info4 = models.CharField(max_length=150, null=True, blank=True,verbose_name='Nombre de Gerente')
+    info4 = models.CharField(max_length=150, null=True, blank=True,verbose_name='Nombre del administrador de proyecto')
+    TS_info5 = models.CharField(max_length=150, null=True, blank=True,verbose_name='Nombre del operador')
+
+
+    banner_title9 = RichTextField(blank=True,verbose_name='Titulo de parrafo')
+    TS_info6 = models.CharField(max_length=150, null=True, blank=True,verbose_name='Subtitulo de parrafo')
+    info_title9 = RichTextField(blank=True,verbose_name='Texto')
+
+    banner_title10 = RichTextField(blank=True,verbose_name='Titulo de parrafo-2')
+    TS_info7 = models.CharField(max_length=150, null=True, blank=True,verbose_name='Subtitulo de parrafo-2')
+    info_title10 = RichTextField(blank=True,verbose_name='Texto-2')
+
+    banner_title11 = RichTextField(blank=True,verbose_name='Titulo de parrafo-3')
+    TS_info8 = models.CharField(max_length=150, null=True, blank=True,verbose_name='Subtitulo de parrafo-3')
+    info_title11 = RichTextField(blank=True,verbose_name='Texto-3')
+    link1 = RichTextField(blank=True,verbose_name='link-para empezar proyecto')
+    link2 = RichTextField(blank=True,verbose_name='link-para contactos')
+
+    banner_title12 = RichTextField(blank=True,verbose_name='invitacion a contactarnos')
+
+
+    custom_title = models.CharField(max_length=100,blank=True,null=True,help_text="Reescribe el  Titulo de la publicacion ")
+
+
+    
+    # Campos de consulta
+
+    consulta= RichTextField(blank=True,verbose_name='Mensaje para que nos consulten por el formulario')
+    thank_you_text = RichTextField(blank=True)
+    # galeria de imagenes barner de presentacion
+
+    content_panels = AbstractEmailForm.content_panels + Page.content_panels + [
+
+
+    #Panel sliders
+        FieldPanel('bio2', classname="full"),
+        FieldPanel('banner_title4', classname="full"),
+        FieldPanel('TS_info1', classname="full"),
+        FieldPanel('TS_info2', classname="full"),
+        FieldPanel('info3', classname="full"),
+        FieldPanel('TS_info4', classname="full"),
+        FieldPanel('info4', classname="full"),
+        FieldPanel('TS_info5', classname="full"),
+        FieldPanel('banner_title9', classname="full"),
+        FieldPanel('TS_info6', classname="full"),
+        FieldPanel('info_title9', classname="full"),
+        FieldPanel('banner_title10', classname="full"),
+        FieldPanel('TS_info7', classname="full"),
+        FieldPanel('info_title10', classname="full"),
+        FieldPanel('banner_title11', classname="full"),
+        FieldPanel('TS_info8', classname="full"),
+        FieldPanel('info_title11', classname="full"),
+        FieldPanel('link1', classname="full"),
+        FieldPanel('link2', classname="full"),
+   
+#panel 
+        FieldPanel('consulta', classname="full"),
+        InlinePanel('galleria_3', label="Imagen de Fondo Barner"),
+#Panel capo de noticas
+        FieldPanel("custom_title"),
+    ]
+
+
+
+class GaleriadeImagenes(Orderable):
+    page = ParentalKey(info, on_delete=models.CASCADE, related_name='galleria_3')
+    logo = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Logotipo SmartQuail')
+    profile_pic = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Foto de perfil')
+    image = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Imagen Slide Banner 1')
+    image_2 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Imagen Slide Banner 2')
+    image_3 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Imagen Slide Banner 3')
+
+
+    panels = [
+        ImageChooserPanel('logo'),
+        ImageChooserPanel('profile_pic'),
+        ImageChooserPanel('image'),
+        ImageChooserPanel('image_2'),
+        ImageChooserPanel('image_3'),
+    ]
+
+@register_setting
+class SocialMediaSettings(BaseSetting):
+    facebook = models.URLField(blank=True,null=True,help_text="")
+    twitter = models.URLField(blank=True,null=True,help_text="")
+    instagram = models.URLField(blank=True,null=True,help_text="")
+    youtube = models.URLField(blank=True,null=True,help_text="")
+    behance = models.URLField(blank=True,null=True,help_text="")
+    linkedin = models.URLField(blank=True,null=True,help_text="")
+
+    panels = [
+        MultiFieldPanel(
+            [
+            FieldPanel("facebook"),
+            FieldPanel("twitter"),
+            FieldPanel("instagram"),
+            FieldPanel("youtube"),  
+            FieldPanel("behance"),
+            FieldPanel("linkedin"),         
+            ]
+        ,heading= "Social Media Settings")
+    ]
+
+@register_setting
+class GlobalLinksSettings(BaseSetting):
+    contacus = models.URLField(blank=True,null=True,help_text="")
+    start_project_SBM = models.URLField(blank=True,null=True,help_text="")
+    start_project_SBL = models.URLField(blank=True,null=True,help_text="")
+    start_project_SBA = models.URLField(blank=True,null=True,help_text="")
+    start_project_SBT = models.URLField(blank=True,null=True,help_text="")
+
+
+    panels = [
+        MultiFieldPanel(
+            [
+            FieldPanel("contacus"),
+            FieldPanel("start_project_SBM"),
+            FieldPanel("start_project_SBL"),
+            FieldPanel("start_project_SBA"),  
+            FieldPanel("start_project_SBT"),         
+            ]
+        ,heading= "Global Links Settings")
+    ]
