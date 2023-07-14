@@ -3380,7 +3380,7 @@ a.readmore > span {
     width: 100%;
 }
 
-.footer .widget-text p {color:#fff;margin-top: 24px;}
+.footer .widget-text p {color:#fff;margin-top: -17px;}
 
 .footer .widget-title:before{
   content:'';
