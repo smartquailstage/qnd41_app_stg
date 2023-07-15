@@ -223,6 +223,16 @@ class GaleriaHome(Orderable):
     image_14 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Imagen team 2')
     image_15 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Imagen team 3')
     image_16 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Imagen team 4')
+    image_17 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='logo_parther')
+    image_18 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='logo_parther')
+    image_19 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='logo_parther')
+    image_20 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='logo_parther')
+    image_21 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='logo_parther')
+    image_22 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='logo_parther')
+    image_23 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='logo_parther')
+    image_24 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='logo_parther')
+    image_25 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='logo_parther')
+    image_26 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='logo_parther')
 
     panels = [
         ImageChooserPanel('logo'),
@@ -243,6 +253,16 @@ class GaleriaHome(Orderable):
         ImageChooserPanel('image_14'),
         ImageChooserPanel('image_15'),
         ImageChooserPanel('image_16'),
+        ImageChooserPanel('image_17'),
+        ImageChooserPanel('image_18'),
+        ImageChooserPanel('image_19'),
+        ImageChooserPanel('image_20'),
+        ImageChooserPanel('image_21'),
+        ImageChooserPanel('image_22'),
+        ImageChooserPanel('image_23'),
+        ImageChooserPanel('image_24'),
+        ImageChooserPanel('image_25'),
+        ImageChooserPanel('image_26'),
     ]
 
 
