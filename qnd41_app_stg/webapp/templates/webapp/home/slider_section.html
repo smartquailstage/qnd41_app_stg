@@ -36,9 +36,9 @@
           <div class="hero-text-wrap-sbm gradient-overlay-bg-sbm">
             <div class="hero-text">
               <div class="container text-center">
-                <h2 class="white-color font-500 letter-spacing-5"><img src="{% static 'img/SBM-Blogo.png' %}">{{page.banner_title5|richtext}}</h2>
-                <h3 class="white-color text-uppercase font-700">{{page.TS_info2}}<br>{{page.info2}}</h3>
-                {% include 'shop/product/sbm_list.html' %}
+                <h2 class="white-color font-500 letter-spacing-5"><img src="{% static 'img/smartbusinessmedia.png' %}">{{page.banner_title5|richtext}}</h2>
+                <h3 class="white-color text-uppercase font-400">{{page.TS_info2}}<br>{{page.info2}}</h3>
+                {% include 'sbmshop/product/sbm_list.html' %}
                 <a href="{% slugurl 'contactus' %}" class=" btn btn-outline-white btn-rounded">{% trans 'Contact Us' %}</a> </p>
               </div>
             </div>
@@ -53,8 +53,9 @@
             <div class="hero-text">
               <div class="container text-center">
                 <h2 class="white-color font-500 letter-spacing-5"><img src="{% static 'img/smartbusinessanalytics.png' %}">{{page.banner_title6|richtext}}</h2>
-                <h1 class="white-color text-uppercase font-700">{{page.TS_info3}}<br>{{page.info3}}</h1>
-                <p class="text-center mt-30"><a href="{% slugurl 'sbanalytics' %}" class="btn btn-dark btn-rounded btn-animate"><span>{% trans 'Learn More' %} <i class="icofont icofont-arrow-right"></i></span></a> <a href="{% slugurl 'contactus' %}" class="btn btn-outline-white btn-rounded">{% trans 'Contact Us' %}</a> </p>
+                {% include 'sbashop/product/sbm_list.html' %}
+               
+                <a href="{% slugurl 'contactus' %}" class="btn btn-outline-white btn-rounded">{% trans 'Contact Us' %}</a> </p>
               </div>
             </div>
           </div>
@@ -68,8 +69,8 @@
             <div class="hero-text">
               <div class="container text-center">
                 <h2 class="white-color font-500 letter-spacing-5"><img src="{% static 'img/smartbusinesslaw.png' %}">{{page.banner_title7|richtext}}</h2>
-                <h1 class="white-color text-uppercase font-700">{{page.TS_info4}}<br>{{page.info4}}</h1>
-                <p class="text-center mt-30"><a href="{% slugurl 'sblaw' %}" class="btn btn-dark btn-rounded btn-animate"><span>{% trans 'Learn More' %} <i class="icofont icofont-arrow-right"></i></span></a> <a  href="{% slugurl 'contactus' %}" class="btn btn-outline-white btn-rounded">{% trans 'Contact Us' %}</a> </p>
+                {% include 'sblshop/product/sbm_list.html' %} 
+                  <a  href="{% slugurl 'contactus' %}" class="btn btn-outline-white btn-rounded">{% trans 'Contact Us' %}</a> </p>
               </div>
             </div>
           </div>
@@ -83,8 +84,8 @@
             <div class="hero-text">
               <div class="container text-center">
                 <h2 class="white-color font-500 letter-spacing-5"><img src="{% static 'img/smartbusinesstechnologies.png' %}">{{page.banner_title8|richtext}}</h2>
-                <h1 class="white-color text-uppercase font-700">{{page.TS_info5}}<br>{{page.info5}}</h1>
-                <p class="text-center mt-30"><a href="{% slugurl 'sbtechnologies' %}" class="btn btn-dark btn-rounded btn-animate"><span>{% trans 'Learn More' %} <i class="icofont icofont-arrow-right"></i></span></a> <a href="{% slugurl 'contactus' %}" class="btn btn-outline-white btn-rounded">{% trans 'Contact Us' %}</a> </p>
+                {% include 'sbtshop/product/sbm_list.html' %}
+                 <a href="{% slugurl 'contactus' %}" class="btn btn-outline-white btn-rounded">{% trans 'Contact Us' %}</a> </p>
               </div>
             </div>
           </div>

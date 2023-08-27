@@ -19,17 +19,35 @@ urlpatterns = i18n_patterns (
     path('smartbusinessanalytics/', admin.site.urls),
     path('baton/', include('baton.urls')),
     path('Orders/', include('orders.urls', namespace='orders')),
-    #path('Contracts/', include('contracts.urls', namespace='contracts')),
+    path('Contracts/', include('contracts.urls', namespace='contracts')),
     #path('services/', include('services.urls', namespace="services")),
     path('qr-code/', include(qr_code_urls, namespace="qr_code")),
     path ('rosetta/', include('rosetta.urls')),
     #E-commerce-configs
     #path('coupons/', include('coupons.urls', namespace='coupons')),
-    path('cart/', include('cart.urls', namespace='cart')),
+    path('sblshop/', include('sblshop.urls', namespace='sblshop')),
+    path('sblcart/', include('sblcart.urls', namespace='sblcart')),
+    path('Sblorders/', include('sblorders.urls', namespace='sblorders')),
+  
     #path('orders/', include('orders.urls', namespace='orders')),
     #path('payment/', include('payment.urls', namespace='payment')),
     path('shop/', include('shop.urls', namespace='shop')),
+    path('cart/', include('cart.urls', namespace='cart')),
+   
+
+    path('sbashop/', include('sbashop.urls', namespace='sbashop')),
+    path('sbacart/', include('sbacart.urls', namespace='sbacart')),
+    path('sbaorders/', include('sbaorders.urls', namespace='sbaorders')),
+
+    path('sbtshop/', include('sbtshop.urls', namespace='sbtshop')),
+    path('sbtcart/', include('sbtcart.urls', namespace='sbtcart')),
+    path('Sbtorders/', include('sbtorders.urls', namespace='sbtorders')),
+
+    path('sbmshop/', include('sbmshop.urls', namespace='sbmshop')),
+    path('sbmcart/', include('sbmcart.urls', namespace='sbmcart')),
+    path('Sbmorders/', include('sbmorders.urls', namespace='sbmorders')),
     #Eduaction Platform
+    path('Solutions_blog/', include('solutions_blog.urls', namespace='solutions_blog')),
    # path('account/', include('account.urls')),
     #path('account/login/', auth_views.LoginView.as_view(), name='login'),
     #path('account/logout/', auth_views.LogoutView.as_view(), name='logout'),

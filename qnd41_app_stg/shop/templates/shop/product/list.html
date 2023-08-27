@@ -8,12 +8,30 @@
 {% endblock %}
 
 {% block content %}
+{% for product in products %}
+<style>
+ 
+  .blog-cover-bg {
+  background-image: url("{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}");
+}
+
+</style>
+{% endfor%}
 
 {% include 'shop/header.html' %}
+{% if category.slug in categories == 'smart-business-law' %}
+
 <section class="title-hero-bg blog-cover-bg" data-stellar-background-ratio="0.2">
   <div class="container">
     <div class="page-title text-center">
-      <h1>{% trans ' Our Business Media Plans ' %}</h1>
+      
+      {% for c in categories %}
+      
+      <img src="{% if c.logo %}{{ c.logo.url }}{% else %}{% endif %}">
+     
+      {% endfor %}
+     
+    
       <h4 class="text-uppercase mt-30 white-color">Checkout Our Latest Posts</h4>
     </div>
   </div>
@@ -78,47 +96,7 @@
   </div>
 </section>
 
-<section>
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-8 section-heading">
-        <h2 class="text-uppercase wow fadeTop" data-wow-delay="0.1s">What We Offer</h2>
-        <h4 class="text-uppercase text-uppercase wow fadeTop" data-wow-delay="0.2s">- We Turn Heads -</h4>
-      </div>
-    </div>
-    <div class="row mt-40">
-      <div class="col-md-8 col-md-offset-2">
-        <div class="icon-tabs">
-          <!--=== Nav tabs ===-->
-         
-          <ul class="nav nav-tabs text-center" role="tablist">
-            {% for c in categories %}
-            <li  role="presentation"  {% if category.slug == c.slug %}class="selected active"{% endif %}>
-              <a href="{{ c.get_absolute_url }}" >{{ c.name }}</a>
-            </li>
-            {% endfor %}
-          </ul>
-          
-          <!--=== Tab panes ===-->
-          <div class="tab-content text-center">
-            <div role="tabpanel" class="tab-pane fade in active" id="design">
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam tincidunt consequat nunc, ultrices vehicula mauris mollis et. Sed pharetra ultrices quam in laoreet. Donec laoreet eu mi nec sagittis. Curabitur nunc velit, egestas vel aliquet ac, tempus quis dolor. </p>
-            </div>
-            <div role="tabpanel" class="tab-pane fade" id="development">
-              <p>Duis pulvinar mattis turpis in mollis. Suspendisse eu eros id dolor efficitur tincidunt quis id tellus. In lacinia laoreet auctor. Mauris a consequat magna, in tempus urna laoreet eu mi nec sagittis. Curabitur nunc velit, egestas vel aliquet ac, tempus quis dolor.</p>
-            </div>
-            <div role="tabpanel" class="tab-pane fade" id="apps">
-              <p>Nam nisi sapien, varius non aliquet vel, vestibulum at lacus. Nulla leo neque, mattis id risus id, imperdiet finibus risus. Curabitur laoreet sit amet lacus vel semper. Vivamus in risus magna. Nulla eu metus congue, condimentum mi et, tristique arcu. </p>
-            </div>
-            <div role="tabpanel" class="tab-pane fade" id="seo">
-              <p>Proin rutrum facilisis porta. Aenean hendrerit, leo vel luctus porttitor, mauris metus finibus massa, eu luctus nisi ligula ac urna. Maecenas elementum nulla quis erat ultrices lobortis. Donec eget placerat magna egestas vel aliquet ac, tempus quis dolor.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+
 
 <section class="pt-0">
   <div class="container">
@@ -130,68 +108,153 @@
        
       </div>
     </div>
+    
     <div class="row mt-50">
+      {% if category %}{{ category.name }}{% else %}Products{% endif %}
+    {% for product in products %}
       <div class="col-md-3 pricing-table col-sm-6">
         <div class="pricing-box border-radius-25">
-          <h4>Started</h4>
-          <h2><sup>$</sup><span>0.99</span></h2>
-          <ul>
-            <li>512 GB Ram</li>
-            <li>50 GB Disk</li>
-            <li>1 User</li>
-            <li>4TB Bandwidth</li>
-          </ul>
-          <div class="pricing-box-bottom"> <a href="pricing-tables.html#" class="btn btn-color btn-circle"><span>Subscribe Now</span></a> </div>
-        </div>
-      </div>
-      <div class="col-md-3 pricing-table col-sm-6">
-        <div class="pricing-box border-radius-25">
-          {% if category.slug == c.smartbusinessmedia %}
+         
           <h4>{{ product.name }}</h4>
-          <h2><sup>$</sup><span>19.99</span></h2>
+          <h2><sup>$</sup><span>{{ product.price }}</span></h2>
           <ul>
-            <li>512 GB Ram</li>
-            <li>80 GB Disk</li>
-            <li>2 User</li>
-            <li>4TB Bandwidth</li>
+            <li>{{ product.item1 }}</li>
+            <li>{{ product.item2 }}</li>
+            <li>{{ product.item3 }}</li>
+            <li>{{ product.item4 }}</li>
           </ul>
-          <div class="pricing-box-bottom"> <a href="pricing-tables.html#" class="btn btn-color btn-circle"><span>Subscribe Now</span></a> </div>      
-          {% endif %}
+          <div class="pricing-box-bottom"> <a href="{{ product.get_absolute_url }}" class="btn btn-color btn-circle"><span>{% trans 'add a cart' %}</span></a> </div>      
+         
         </div>
       </div>
-      <div class="col-md-3 pricing-table-featured col-sm-6">
-        <div class="pricing-box border-radius-25">
-          <h4>Standard</h4>
-          <h2><sup>$</sup><span>39.99</span></h2>
-          <div class="pricicng-feature">
-            <ul>
-              <li>768 GB Ram</li>
-              <li>80 GB Disk</li>
-              <li>3 User</li>
-              <li>Full Data Security</li>
-              <li>Unlimited Questions</li>
-              <li>6TB Bandwidth</li>
-            </ul>
-          </div>
-          <div class="pricing-box-bottom"> <a href="pricing-tables.html#" class="btn btn-color btn-circle"><span>Subscribe Now</span></a> </div>
+      {% endfor %}
+    </div>
+   
+  </div>
+</section>
+
+{% else %}
+
+{% endif %}
+
+
+{% if category.slug == 'smart-business-media' %}
+
+<section class="title-hero-bg blog-cover-bg" data-stellar-background-ratio="0.2">
+  <div class="container">
+    <div class="page-title text-center">
+      
+      {% for c in categories %}
+      
+      <img src="{% if c.logo %}{{ c.logo.url }}{% else %}{% endif %}">
+     
+      {% endfor %}
+     
+    
+      <h4 class="text-uppercase mt-30 white-color">Checkout Our Latest Posts</h4>
+    </div>
+  </div>
+</section>
+
+
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-8 section-heading">
+        <h2 class="text-uppercase wow fadeTop" data-wow-delay="0.1s">Scoda Agency</h2>
+        <h4 class="text-uppercase text-uppercase wow fadeTop" data-wow-delay="0.2s">- Tell a Bigger Story -</h4>
+        <div class="mt-30 wow fadeTop" data-wow-delay="0.3s">
+          <p>We are a fully in-house digital agency focusing on branding, marketing, web design and development with clients ranging from start-ups, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed varius quam ut magna ultricies pellentesque. </p>
         </div>
       </div>
-      <div class="col-md-3 pricing-table col-sm-6">
-        <div class="pricing-box border-radius-25">
-          <h4>Pro</h4>
-          <h2><sup>$</sup><span>49.99</span></h2>
-          <ul>
-            <li>1 TB Ram</li>
-            <li>1 TB Disk</li>
-            <li>4 User</li>
-            <li>4TB Bandwidth</li>
-          </ul>
-          <div class="pricing-box-bottom"> <a href="pricing-tables.html#" class="btn btn-color btn-circle"><span>Subscribe Now</span></a> </div>
+    </div>
+    <div class="row mt-50">
+      <div class="col-md-4 feature-box text-left mb-50 col-sm-6 wow fadeTop" data-wow-delay="0.1s">
+        <div class="pull-left"><i class="icofont icofont-light-bulb font-50px default-icon"></i></div>
+        <div class="pull-right">
+          <h5 class="mt-0 upper-case">Brand Design</h5>
+          <p>Designing a good website that accommodates a lot of content is a tricky balancing act to pull off.</p>
+        </div>
+      </div>
+      <div class="col-md-4 feature-box text-left mb-50 col-sm-6 wow fadeTop" data-wow-delay="0.2s">
+        <div class="pull-left"><i class="icofont icofont-rocket-alt-2 font-50px default-icon"></i></div>
+        <div class="pull-right">
+          <h5 class="mt-0 upper-case">App Development</h5>
+          <p>We build mobile apps for the conference, integrating unique content and branding to create.</p>
+        </div>
+      </div>
+      <div class="col-md-4 feature-box text-left mb-50 col-sm-6 wow fadeTop" data-wow-delay="0.3s">
+        <div class="pull-left"><i class="icofont icofont-paint font-50px default-icon"></i></div>
+        <div class="pull-right">
+          <h5 class="mt-0 upper-case">Digital Marketing</h5>
+          <p>Google has made this important since 1998 when it launched. Content became, and still is king since websites.</p>
+        </div>
+      </div>
+      <div class="col-md-4 feature-box text-left mb-50 col-sm-6 wow fadeTop" data-wow-delay="0.4s">
+        <div class="pull-left"><i class="icofont icofont-lightning-ray font-50px default-icon"></i></div>
+        <div class="pull-right">
+          <h5 class="mt-0 upper-case">Unique Ideas</h5>
+          <p>Designing a good website that accommodates a lot of content is a tricky balancing act to pull off.</p>
+        </div>
+      </div>
+      <div class="col-md-4 feature-box text-left mb-50 col-sm-6 wow fadeTop" data-wow-delay="0.5s">
+        <div class="pull-left"><i class="icofont icofont-gears font-50px default-icon"></i></div>
+        <div class="pull-right">
+          <h5 class="mt-0 upper-case">Easy Customization</h5>
+          <p>We build mobile apps for the conference, integrating unique content and branding to create.</p>
+        </div>
+      </div>
+      <div class="col-md-4 feature-box text-left mb-50 col-sm-6 wow fadeTop" data-wow-delay="0.6s">
+        <div class="pull-left"><i class="icofont icofont-responsive font-50px default-icon"></i></div>
+        <div class="pull-right">
+          <h5 class="mt-0 upper-case">Fully Responsive</h5>
+          <p>Google has made this important since 1998 when it launched. Content became, and still is king since websites.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+
+
+<section class="pt-0">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-8 section-heading">
+        
+        <h2 class="text-uppercase">{{ category.name }}</h2>
+        <h4 class="text-uppercase source-font">- Choosase Youras Plan -</h4>
+       
+      </div>
+    </div>
+    
+    <div class="row mt-50">
+      {% if category %}{{ category.name }}{% else %}Products{% endif %}
+    {% for product in products %}
+      <div class="col-md-3 pricing-table col-sm-6">
+        <div class="pricing-box border-radius-25">
+         
+          <h4>{{ product.name }}</h4>
+          <h2><sup>$</sup><span>{{ product.price }}</span></h2>
+          <ul>
+            <li>{{ product.item1 }}</li>
+            <li>{{ product.item2 }}</li>
+            <li>{{ product.item3 }}</li>
+            <li>{{ product.item4 }}</li>
+          </ul>
+          <div class="pricing-box-bottom"> <a href="{{ product.get_absolute_url }}" class="btn btn-color btn-circle"><span>{% trans 'add a cart' %}</span></a> </div>      
+         
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+   
+  </div>
+</section>
+
+{% else %}
+
+{% endif %}
 
 <section class="widget-btns many-btns">
   {% for c in categories %}

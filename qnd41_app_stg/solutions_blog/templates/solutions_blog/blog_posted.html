@@ -1,0 +1,12 @@
+# blog/templates/blog/blog_post.html
+{% extends "base2.html" %}
+{% load i18n wagtailcore_tags wagtailimages_tags %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block content %}
+  <h1>{{ post.title }}</h1>
+  <p>{{ post.date }}</p>
+  sdf
+  {{ post.body|richtext }}
+{% endblock %}

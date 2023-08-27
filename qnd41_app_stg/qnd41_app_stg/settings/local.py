@@ -405,3 +405,10 @@ STATIC_ROOT = STATIC_ROOT = BASE_DIR / "static"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+# celery setup
+
+#CELERY_BROKER_URL = 'amqp://guest:guest@rabbitmq:5672//'
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+
+

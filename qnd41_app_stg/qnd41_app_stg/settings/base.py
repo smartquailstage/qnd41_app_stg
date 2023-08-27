@@ -92,8 +92,12 @@ INSTALLED_APPS = [
     'django_social_share',
     'streams',
     'widget_tweaks',
+    'wagtailcaptcha',
    #SMARTQUAIL-BUSINESS-CONSULTING
     'shop',
+    'services',
+    'coupons',
+    'contracts',
     #'coupons',
     #'cart',
     #'todo_en_orden',
@@ -102,6 +106,28 @@ INSTALLED_APPS = [
     #'contracts',
     #'services',
     'cart',
+    #'sbacart',
+    #'sbashop',
+    #'sbaorder',
+    #'blog',
+
+    'sblcart',
+    'sblshop',
+    'sblorders',
+
+    'sbtcart',
+    'sbtshop',
+    'sbtorders',
+
+    'sbmcart',
+    'sbmshop',
+    'sbmorders',
+
+   # 'sbacart',
+    'sbashop',
+    'sbaorders',
+
+    #'sblorders',
     #'cart_c',
     'images',
     'payment',
@@ -114,6 +140,7 @@ INSTALLED_APPS = [
     'qr_code',
     'storages',
     'actions',
+    'solutions_blog',
     
     'baton.autodiscover',   
     #'memcache_status',
@@ -196,6 +223,11 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 #Ecommerce App
 CART_SESSION_ID = 'cart'
+SBLCART_SESSION_ID = 'cart'
+SBACART_SESSION_ID = 'cart'
+SBTCART_SESSION_ID = 'cart'
+SBMCART_SESSION_ID = 'cart'
+
 
 BRAINTREE_MERCHANT_ID = os.environ.get('BRAINTREE_M_ID')
 BRAINTREE_PUBLIC_KEY = os.environ.get('BRAINTREE_KEY')
@@ -210,14 +242,7 @@ Configuration.configure(
     BRAINTREE_PRIVATE_KEY
 )
 
-# celery setup
-CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL')
-#CELERY_BROKER_URL = 'amqp://guest:guest@rabbitmq:5672//'
-#CELERY_BROKER_URL = 'redis://localhost:6379/0'
-CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND')
-CELERY_ACCEPT_CONTENT = ['application/json']
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TASK_SERIALIZER = 'json'
+
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',

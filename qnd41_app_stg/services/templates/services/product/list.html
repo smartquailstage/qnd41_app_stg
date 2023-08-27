@@ -1,0 +1,211 @@
+{% extends "base_service_dash.html" %}
+{% load static %}
+{% load embed_video_tags %}
+
+{% block title %}
+  {% if category %}{{ category.name }}{% else %}Products{% endif %}
+{% endblock %}
+
+{% block content %}
+
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+
+  <!-- /.content-header -->
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <!-- Info boxes -->
+
+      <!-- /.row -->
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header" style="background-color:#970707">
+              <h5 class="card-title">  {% if category %}{{ category.name }}{% else %}Products{% endif %} Services</h5>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                  <i class="fas fa-circle"></i>
+                </button>
+              </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body " style="background-color: #343a40">
+              <div class="row">
+                <div class="col-md-8">
+                 
+
+                  <div class="chart">
+                    <!-- Sales Chart Canvas -->
+                       
+      <div class="item">
+        {% if category.name == "SmartBusinessMedia" %}     
+        <a href="{{ product.get_absolute_url }}" class="brand-link">
+          <span>
+          <img src="{% static '/img/SBM-Blogo.png'%}" class="img-thumbnail" style="width: 680px;background-color: #343a40;">
+        </span>
+          <img src="" style="width: 200px;">
+          
+        </a>
+        <br>
+        <br>
+        <p class="text-center">
+          <strong style="color: #f2f2f2;"> {{category.description }}
+          </strong>
+        </p>
+        {% else %}
+        {% endif %}
+      </div>
+      
+
+                  </div>
+                  <!-- /.chart-responsive -->
+                </div>
+                <!-- /.col -->
+                <div class="col-md-4">
+                  <p class="text-center">
+                    <strong>SmartBusinessMedia Crew </strong>
+                  </p>
+                  <ul class="users-list clearfix">
+                    {% if category.name == "SmartBusinessMedia" %}  
+                    <li>
+                      <img src="{% if category.foto %}{{ category.foto.url }}{% else %}{% static "img/no_image.png" %}{% endif %}" alt="User Image">
+                      <a class="users-list-name" href="#">{{ category.nombre }}</a>
+                      <span class="users-list-date">UI/UX</span>
+                    </li>
+                    {% else %}
+                    {% endif %}
+                    <li>
+                      <img src="{% static 'dist/img/user8-128x128.jpg' %} " alt="User Image">
+                      <a class="users-list-name" href="#">Norman</a>
+                      <span class="users-list-date">SEO/SEM</span>
+                    </li>
+                    <li>
+                      <img src="{% static 'dist/img/user7-128x128.jpg' %}" alt="User Image">
+                      <a class="users-list-name" href="#">Jane</a>
+                      <span class="users-list-date">CMR</span>
+                    </li>
+                    <li>
+                      <img src="{% static 'dist/img/user6-128x128.jpg' %}" alt="User Image">
+                      <a class="users-list-name" href="#">John</a>
+                      <span class="users-list-date">Designer</span>
+                    </li>
+                    <li>
+                      <img src="{% static 'dist/img/user2-160x160.jpg' %}" alt="User Image">
+                      <a class="users-list-name" href="#">Alexander</a>
+                      <span class="users-list-date">13 Jan</span>
+                    </li>
+                    <li>
+                      <img src="{% static 'dist/img/user5-128x128.jpg' %}" alt="User Image">
+                      <a class="users-list-name" href="#">Sarah</a>
+                      <span class="users-list-date">14 Jan</span>
+                    </li>
+                    <li>
+                      <img src="{% static 'dist/img/user4-128x128.jpg' %}" alt="User Image">
+                      <a class="users-list-name" href="#">Nora</a>
+                      <span class="users-list-date">15 Jan</span>
+                    </li>
+                    <li>
+                      <img src="{% static 'dist/img/user3-128x128.jpg' %}" alt="User Image">
+                      <a class="users-list-name" href="#">Nadia</a>
+                      <span class="users-list-date">15 Jan</span>
+                    </li>
+                  </ul>
+
+
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+            </div>
+            <!-- ./card-body -->
+       
+            <!-- /.card-footer -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+
+      <!-- Main row -->
+      <div class="row">
+        <div class="col-md-4">
+          <!-- Info Boxes Style 2 -->
+          {% for product in products %}
+          <a href="{{ product.get_absolute_url }}">
+          <div class="info-box mb-3 bg-{{ product.types }} class="btn btn-block bg-gradient-{{ product.types }}" type="button">
+           
+            <span class="info-box-icon"><i class="fas fa-tag"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">{{ product.name }}</span>
+              <span class="info-box-number">${{ product.price }}</span>
+              <span class="description-text">Per Month</span>
+            </div>
+          </div>
+        </a>
+
+          {% endfor %}
+
+
+
+        </div>
+        <!-- Left col -->
+        <div class="col-md-8">
+          <!-- MAP & BOX PANE -->
+          <div class="card">
+            <div class="card-header" style="background-color: #970707;">
+              <h3 class="card-title">SmartBusinessMedia in Action</h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body p-0">
+              <div class="d-md-flex">
+                <div class="p-1 flex-fill" style="overflow: scroll">
+                  <!-- Map will be created here -->
+                  <div id="world-map-markers" style="height: 500px;width: auto; overflow: scroll">
+                    {% video category.video as my_video %}
+                    {% video my_video '870x500' %}
+                    {% endvideo %}
+                  </div>
+                </div>
+          
+              </div><!-- /.d-md-flex -->
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+
+          <!-- /.row -->
+
+          <!-- TABLE: LATEST ORDERS -->
+
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+
+        
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </div><!--/. container-fluid -->
+  </section>
+  <!-- /.content -->
+</div>
+
+
+{% endblock %}
