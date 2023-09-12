@@ -24,13 +24,28 @@ from wagtail.snippets.models import register_snippet
 from wagtail.core.fields import StreamField, RichTextField
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from wagtail.search import index
-from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField
+from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField,  FORM_FIELD_CHOICES
 
 
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.contrib.forms.edit_handlers import FormSubmissionsPanel
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 from django.urls import reverse
+from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
+from wagtail.images.blocks import ImageChooserBlock
+from wagtail.contrib.forms.forms import FormBuilder
+from wagtail.images.fields import WagtailImageField
+from wagtail.core.models import Collection
+import json
+from os.path import splitext
+
+from django.core.serializers.json import DjangoJSONEncoder
+
+from wagtail.images import get_image_model
+
+
+
+
 
 
 # pagina de inicio
@@ -1393,6 +1408,7 @@ class solutions(AbstractEmailForm):
 
     # Empieza Banner de sliders
     bio = RichTextField(blank=True,verbose_name='rseña bibliografica')
+    #Blog app
 
     category = models.ForeignKey(solutions_categories, related_name='items',on_delete=models.CASCADE, null= True)
 
@@ -1473,6 +1489,7 @@ class solutions(AbstractEmailForm):
 
     #Panel sliders
         FieldPanel('bio', classname="full"),
+        
         FieldPanel('category', classname="full"),
         FieldPanel('TS_info1', classname="full"),
         FieldPanel('info1', classname="full"),
@@ -1603,4 +1620,433 @@ class Galeriacreatesolutions(Orderable):
         ImageChooserPanel('image_24'),
         ImageChooserPanel('image_25'),
         ImageChooserPanel('image_26'),
+    ]
+
+
+
+
+class ArticleListingPage(Page):
+    template = "webapp/article_listing_page.html"
+
+    custom_title = models.CharField(
+        max_length=100,
+        blank=False,
+        null=False,
+        help_text='Overwrites the default title',
+    )
+
+    content_panels = Page.content_panels + [
+        FieldPanel("custom_title"),
+    ]
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        context["posts"] = ArticleDetailPage.objects.live().public()
+        return context
+    
+class comments_ArticleDetailPage(AbstractFormField):
+    page = ParentalKey('ArticleDetailPage', on_delete=models.CASCADE, related_name='form_fields')
+
+class ArticleDetailPage(AbstractEmailForm):
+
+    category = models.CharField(
+        max_length=100,
+        blank=False,
+        null=True,
+        help_text='Article category',
+    )
+
+    author = models.CharField(
+        max_length=100,
+        blank=False,
+        null=True,
+        help_text='Author Article',
+    )
+
+    bio2 = models.CharField(
+        max_length=500,
+        blank=False,
+        null=True,
+        help_text='Author bio',
+    )
+
+    custom_title = models.CharField(
+        max_length=100,
+        blank=False,
+        null=True,
+        help_text='Overwrites article title',
+    )
+    custom_subtitle = models.CharField(
+        max_length=100,
+        blank=False,
+        null=True,
+        help_text='Overwrites article subtitle',
+    )
+    blog_image = models.ForeignKey(
+        "wagtailimages.Image",
+        blank=False,
+        null=True,
+        related_name="+",
+        on_delete=models.SET_NULL,
+    )
+    date = models.DateTimeField(auto_now=True)
+    abstract = RichTextField(blank=True,verbose_name='Abstract')
+    comments = RichTextField(blank=True,verbose_name='Mensaje para que nos dejen un comentario')
+    thank_you_text = RichTextField(blank=True)
+
+    content = StreamField(
+        [
+            ("title_and_text", blocks.TitleAndTextBlock()),
+            ("full_richtext", blocks.RichtextBlock()),
+            ("simple_richtext", blocks.SimpleRichtextBlock()),
+            ('image', ImageChooserBlock()),
+            ("cards", blocks.CardBlock()),
+        ],
+        null=True,
+        blank=True,
+    )
+
+    content_panels = Page.content_panels + [
+        FieldPanel("category"),
+        FieldPanel("author"),
+        FieldPanel("bio2"),
+        FieldPanel("custom_title"),
+        FieldPanel("custom_subtitle"),
+        ImageChooserPanel("blog_image"),
+        InlinePanel('galleria_article_Page', label="Imagenes del articulo"),
+        FieldPanel("abstract"),
+        StreamFieldPanel("content"),
+        FormSubmissionsPanel(),
+        InlinePanel('form_fields', label="comments"),
+        FieldPanel('thank_you_text', classname="full"),
+        MultiFieldPanel([
+            FieldRowPanel([
+                FieldPanel('from_address', classname="col6"),
+                FieldPanel('to_address', classname="col6"),
+            ]),
+            FieldPanel('subject'),
+        ], "Email"),
+    ]
+
+    def get_form_fields(self):
+        return self.form_fields.all()
+
+    def get_data_fields(self):
+        data_fields = [
+            ('name', 'Name'),
+        ]
+        data_fields += super().get_data_fields()
+
+        return data_fields
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+
+        # If you need to show results only on landing page,
+        # you may need check request.method
+
+        results = dict()
+        # Get information about form fields
+        data_fields = [
+            (field.clean_name, field.label)
+            for field in self.get_form_fields()
+        ]
+
+        # Get all submissions for current page
+        submissions = self.get_submission_class().objects.filter(page=self)
+        for submission in submissions:
+            data = submission.get_data()
+
+            # Count results for each question
+            for name, label in data_fields:
+                answer = data.get(name)
+                if answer is None:
+                    # Something wrong with data.
+                    # Probably you have changed questions
+                    # and now we are receiving answers for old questions.
+                    # Just skip them.
+                    continue
+
+                if type(answer) is list:
+                    # Answer is a list if the field type is 'Checkboxes'
+                    answer = u', '.join(answer)
+
+                question_stats = results.get(label, {})
+                question_stats[answer] = question_stats.get(answer, 0) + 1
+                results[label] = question_stats
+
+        context.update({
+            'results': results,
+        })
+        return context
+    
+class galleria_article_Page(Orderable):
+    page = ParentalKey(ArticleDetailPage, on_delete=models.CASCADE, related_name='galleria_article_Page')    
+    image_1 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Banner')
+    image_2 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Author picture')
+    image_3 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='imagen 2')
+    
+    
+    panels = [
+        ImageChooserPanel('image_1'),
+        ImageChooserPanel('image_2'),
+        ImageChooserPanel('image_3')
+    ]
+
+@register_setting
+class SocialMediaSettings(BaseSetting):
+    facebook = models.URLField(blank=True,null=True,help_text="")
+    twitter = models.URLField(blank=True,null=True,help_text="")
+    instagram = models.URLField(blank=True,null=True,help_text="")
+    youtube = models.URLField(blank=True,null=True,help_text="")
+    pinterest = models.URLField(blank=True,null=True,help_text="")
+    linkedin = models.URLField(blank=True,null=True,help_text="")
+
+    panels = [
+        MultiFieldPanel(
+            [
+            FieldPanel("facebook"),
+            FieldPanel("twitter"),
+            FieldPanel("instagram"),
+            FieldPanel("youtube"),  
+            FieldPanel("pinterest"),
+            FieldPanel("linkedin"),         
+            ]
+        ,heading= "Social Media Settings")
+    ]
+
+JOBS= ( 
+    ("Marketing & Publishing", "Marketing & Publishing"), 
+    ("UI/UX Developer","UI/UX Developer"), 
+    ("Python/Django Developer","Python/Django Developer"), 
+    ("Docker Developer", "Docker Developer"), 
+    ("Kubernetes Developer", "Kubernetes Developer"),
+    ("FullStack Developer","FullStack Developer"),
+    ("Chief Officer Technologies","Chief Officer Technologies"),
+    ("Chief Officer", "Chief Officer"),
+)
+
+
+class JobsListingOpeningPage(Page):
+    template = "webapp/joblistingopening.html"
+
+    jobs_category= models.CharField(max_length=100, choices = JOBS, null=True)
+
+    custom_title = models.CharField(
+        max_length=100,
+        blank=False,
+        null=False,
+        help_text='Overwrites the default title',
+    )
+
+    benefits = RichTextField(blank=True,verbose_name='Beneficios')
+
+    content_panels = Page.content_panels + [
+        FieldPanel("custom_title"),
+        FieldPanel("jobs_category"),
+        FieldPanel("benefits"),
+    ]
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        context["posts"] = JobsFormDetailOpeningPage.objects.live().public()
+        return context
+
+JOBS_CATEGORY= ( 
+    ("Community Manager senior", "Community Manager senior"), 
+    ("Community Manager Junior","Community Manager Juniorr"), 
+    ("Content Designer senior","Content Designer senior"), 
+    ("Content Designer junior", "Docker Developer junior"), 
+    ("Project Manager senior", "Project Manager senior"),
+    ("Project Manager junior","Project Manager junior"),
+    ("UI/UX Desinger senior","UI/UX Desinger senior"),
+    ("UI/UX Desinger junior","UI/UX Desinger junior"),
+    ("Django Developer senior","Django Developer senior"),
+    ("Django Developer junior","Django Developer junior"),
+    ("System Reliability Engineer junior","System Reliability Engineer junior"),
+    ("System Reliability Engineer senior","System Reliability Engineer senior"),
+)
+
+
+CITIES= ( 
+    ("Quito", "Quito"), 
+    ("Guayaquil","Guayaquil"), 
+    ("Cuenca","Cuenca"), 
+    ("Buenos Aires", "Buenos Aires"), 
+    ("Mendoza", "Mendoza"),
+    ("Paris","Paris"),
+    ("Lausanne","Lausanne"),
+    ("New York","New York"),
+)
+
+COUNTRY= ( 
+    ("Ecuador", "Ecuador"), 
+    ("Switzerland","Switzerland"), 
+    ("Argentina","Argentina"), 
+    ("France", "France"), 
+    ("United States", "United States"),
+)
+
+TIMEJOBS= ( 
+    ("Part Time", "Part Time"), 
+    ("Full Time","Ful Time"), 
+)
+    
+class JobsFormOpeningPage(AbstractFormField):
+    field_type = models.CharField(
+        verbose_name='field type',
+        max_length=16,
+        choices=list(FORM_FIELD_CHOICES) + [('image', 'Upload Image')]
+    )
+    
+    page = ParentalKey('JobsFormDetailOpeningPage', on_delete=models.CASCADE, related_name='form_fields')
+
+
+class CustomFormBuilder(FormBuilder):
+
+    def create_image_field(self, field, options):
+        return WagtailImageField(**options)
+
+class JobsFormDetailOpeningPage(AbstractEmailForm):
+
+    template = "webapp/jobdetailopening.html"
+
+
+    jobs_category = models.CharField(max_length=100, choices = JOBS_CATEGORY, null=True)
+
+    city= models.CharField(max_length=100, choices = CITIES, null=True)
+    country = models.CharField(max_length=100, choices = COUNTRY, null=True)
+    timejobs = models.CharField(max_length=100, choices = TIMEJOBS, null=True)
+    description = RichTextField(blank=True,verbose_name='Descripción corta')
+    uploadcv = models.FileField(upload_to='CV_file/%Y/%m/%d',null=True,blank=True)
+    form_builder = CustomFormBuilder
+    uploaded_image_collection = models.ForeignKey(
+        'wagtailcore.Collection',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+    )
+
+    def get_uploaded_image_collection(self):
+        """
+        Returns a Wagtail Collection, using this form's saved value if present,
+        otherwise returns the 'Root' Collection.
+        """
+        collection = self.uploaded_image_collection
+        return collection or Collection.get_first_root_node()
+
+    @staticmethod
+    def get_image_title(filename):
+        """
+        Generates a usable title from the filename of an image upload.
+        Note: The filename will be provided as a 'path/to/file.jpg'
+        """
+
+        if filename:
+            result = splitext(filename)[0]
+            result = result.replace('-', ' ').replace('_', ' ')
+            return result.title()
+        return ''
+
+    def process_form_submission(self, form):
+        """
+        Processes the form submission, if an Image upload is found, pull out the
+        files data, create an actual Wgtail Image and reference its ID only in the
+        stored form response.
+        """
+
+        cleaned_data = form.cleaned_data
+
+        for name, field in form.fields.items():
+            if isinstance(field, WagtailImageField):
+                image_file_data = cleaned_data[name]
+                if image_file_data:
+                    ImageModel = get_image_model()
+
+                    kwargs = {
+                        'file': cleaned_data[name],
+                        'title': self.get_image_title(cleaned_data[name].name),
+                        'collection': self.get_uploaded_image_collection(),
+                    }
+
+                    if form.user and not form.user.is_anonymous:
+                        kwargs['uploaded_by_user'] = form.user
+
+                    image = ImageModel(**kwargs)
+                    image.save()
+                    # saving the image id
+                    # alternatively we can store a path to the image via image.get_rendition
+                    cleaned_data.update({name: image.pk})
+                else:
+                    # remove the value from the data
+                    del cleaned_data[name]
+
+        submission = self.get_submission_class().objects.create(
+            form_data=json.dumps(form.cleaned_data, cls=DjangoJSONEncoder), # note: Wagtail 3.0 & beyond will no longer need to wrap this in json.dumps as it uses Django's JSONField under the hood now - https://docs.wagtail.org/en/stable/releases/3.0.html#replaced-form-data-textfield-with-jsonfield-in-abstractformsubmission
+            page=self,
+        )
+
+        # important: if extending AbstractEmailForm, email logic must be re-added here
+        if self.to_address:
+            self.send_mail(form)
+
+        return submission
+
+        
+    comments = RichTextField(blank=True,verbose_name='Mensaje para que nos dejen un comentario')
+    thank_you_text = RichTextField(blank=True)
+
+    content = StreamField(
+        [
+            ("title_and_text", blocks.TitleAndTextBlock()),
+            ("full_richtext", blocks.RichtextBlock()),
+            ("simple_richtext", blocks.SimpleRichtextBlock()),
+            ('image', ImageChooserBlock()),
+            ("cards", blocks.CardBlock()),
+        ],
+        null=True,
+        blank=True,
+    )
+
+    content_panels = Page.content_panels + [
+        FieldPanel("jobs_category"),
+        FieldPanel("city"),
+        FieldPanel("country"),
+        FieldPanel("timejobs"),
+        FieldPanel("description"),
+        FieldPanel('uploaded_image_collection'),
+        StreamFieldPanel("content"),
+        FormSubmissionsPanel(),
+        InlinePanel('form_fields', label="comments"),
+        FieldPanel('thank_you_text', classname="full"),
+        MultiFieldPanel([
+            FieldRowPanel([
+                FieldPanel('from_address', classname="col6"),
+                FieldPanel('to_address', classname="col6"),
+            ]),
+            FieldPanel('subject'),
+        ], "Email"),
+    ]
+
+class ResourceslistingPage(Page):
+    template = "webapp/resourceslisting.html"
+
+    custom_title = models.CharField(
+        max_length=100,
+        blank=False,
+        null=False,
+        help_text='Overwrites the default title',
+    )
+
+    content_panels = Page.content_panels + [
+        FieldPanel("custom_title"),
+        InlinePanel('galleria_resources_Page', label="Imagenes de background"),
+    ]
+
+class galleria_resources_Page(Orderable):
+    page = ParentalKey(ResourceslistingPage, on_delete=models.CASCADE, related_name='galleria_resources_Page')    
+    image = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Banner')
+
+    panels = [
+        ImageChooserPanel('image'),
     ]

@@ -20,8 +20,9 @@
       <div class="page-title text-center">
         {% for solution in solutions %}
         <h1>{{ solution.category }}</h1>
+        {{ solution.id }}
         {% endfor %}
-        <h4 class="text-uppercase mt-30 white-color">Checkout Our Latest Posts</h4>
+        <h4 class="text-uppercase mt-30 white-color">{{ page.custom_title}}</h4>
       </div>
     </div>
   </section>
