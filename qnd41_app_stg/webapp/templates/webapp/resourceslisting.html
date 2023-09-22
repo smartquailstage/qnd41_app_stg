@@ -9,14 +9,17 @@
 
 {% main_menu template="webapp/home/header.html" %}
 
+
+
+
 <section class="pt-0 pb-0">
     <div class="slider-bg flexslider">
       <ul class="slides">
         <!--=== SLIDE 1 ===-->
         <li>
-        {% for item in galleria_resources_Page.all %}
+        {% for item in page.galleria_resources_Page.all %}
         {% image item.image scale-100 as banner %}
-          <div class="slide-img" style="background:url('banner.url') center center / cover scroll no-repeat;"></div>
+          <div class="slide-img" style="background:url('{{ banner.url }}') center center / cover scroll no-repeat;"></div>
         {% endfor %}
           <div class="hero-text-wrap">
             <div class="hero-text white-color">
@@ -24,7 +27,7 @@
                 <h3 class="white-color font-400">{% trans 'Technologies Resources for Business'%}</h3>
                 <h2 class="white-color font-700">{{ page.custom_title }}
                   <div class="animate-caption capitalize mt-50">
-                    <h2 class="white-color mt-30 text-left"><span class="rotate">Big Data | Machine Learning  | Platforms | and | Artificial Inteleginte</span></h2>
+                    <h2 class="white-color mt-30 text-left"><span class="rotate">Data Science & Big Data | Machine Learning /ML  | Cloud Infrastructure | and | Intelligence Artificial /AI</span></h2>
                   </div>
                 </h2>
               </div>
@@ -41,165 +44,29 @@
         <div class="portfolio-container text-center">
           <ul id="portfolio-filter" class="list-inline filter-transparent wow fadeTop" data-wow-delay="0.1s">
             <li class="active" data-group="all">All</li>
-            <li data-group="design">Design</li>
-            <li data-group="web">Web</li>
-            <li data-group="branding">Branding</li>
-            <li data-group="print">Print</li>
+            <li data-group="Data Science">Data Science</li>
+            <li data-group="Big Data"> Big Data</li>
+            <li data-group="Machine Learning">Machine Learning</li>
+            <li data-group="Cloud Infrastructure">Cloud Infrastructure</li>
+            <li data-group="Intelligence Artificial">Intelligence Artificial</li>
           </ul>
           <ul id="portfolio-grid" class="three-column hover-two">
-            <li class="portfolio-item wow fadeIn" data-wow-delay="0.1s" data-groups='["all", "print", "branding"]'>
+            {% for post in posts %}
+            <li class="portfolio-item wow fadeIn" data-wow-delay="{{ self.delay }}" data-groups='["all", "{{ post.tags }}"]'>
               <div class="portfolio gallery-image-hover portfolio-masonry-item">
                 <div class="dark-overlay"></div>
-                <img src="http://www.incognitothemes.com/scoda/assets/images/portfolio/grid/12.jpg" alt="">
+                {% image post.blog_image scale-100 as s1 %}
+                <img src="{{s1.url}}" alt="">
                 <div class="portfolio-wrap">
                   <div class="portfolio-description">
-                    <h3 class="portfolio-title">A Logo Design</h3>
-                    <a href="single-portfolio.html" class="links">Print Design</a> </div>
+                    <h3 class="portfolio-title">{{ post.title_resource }}</h3>
+                    <a href="{{ post.url }}" class="links">{{ post.tags }}</a> </div>
                   <!--=== /.project-info ===-->
-                  <ul class="portfolio-details">
-                    <li><a class="alpha-lightbox" href="http://www.incognitothemes.com/scoda/assets/images/portfolio/grid/12.jpg"><i class="icofont icofont-search-1"></i></a></li>
-                    <li><a href="single-portfolio.html"><i class="icofont icofont-link-alt"></i></a></li>
-                  </ul>
                 </div>
               </div>
               <!--=== /.portfolio ===-->
             </li>
-            <li class="portfolio-item wow fadeIn" data-wow-delay="0.2s" data-groups='["all", "branding", "web"]'>
-              <div class="portfolio gallery-image-hover portfolio-masonry-item">
-                <div class="dark-overlay"></div>
-                <img src="http://www.incognitothemes.com/scoda/assets/images/portfolio/grid/13.jpg" alt="">
-                <div class="portfolio-wrap">
-                  <div class="portfolio-description">
-                    <h3 class="portfolio-title">Candy</h3>
-                    <a href="single-portfolio.html" class="links">Branding</a> </div>
-                  <!--=== /.project-info ===-->
-                  <ul class="portfolio-details">
-                    <li><a class="alpha-lightbox" href="http://www.incognitothemes.com/scoda/assets/images/portfolio/grid/13.jpg"><i class="icofont icofont-search-1"></i></a></li>
-                    <li><a href="single-portfolio.html"><i class="icofont icofont-link-alt"></i></a></li>
-                  </ul>
-                </div>
-              </div>
-              <!--=== /.portfolio ===-->
-            </li>
-            <li class="portfolio-item wow fadeIn" data-wow-delay="0.3s" data-groups='["all", "branding"]'>
-              <div class="portfolio gallery-image-hover portfolio-masonry-item">
-                <div class="dark-overlay"></div>
-                <img src="http://www.incognitothemes.com/scoda/assets/images/portfolio/grid/14.jpg" alt="">
-                <div class="portfolio-wrap">
-                  <div class="portfolio-description">
-                    <h3 class="portfolio-title">Music Guiter</h3>
-                    <a href="single-portfolio.html" class="links">Branding</a> </div>
-                  <!--=== /.project-info ===-->
-                  <ul class="portfolio-details">
-                    <li><a class="alpha-lightbox" href="http://www.incognitothemes.com/scoda/assets/images/portfolio/grid/14.jpg"><i class="icofont icofont-search-1"></i></a></li>
-                    <li><a href="single-portfolio.html"><i class="icofont icofont-link-alt"></i></a></li>
-                  </ul>
-                </div>
-              </div>
-              <!--=== /.portfolio ===-->
-            </li>
-            <li class="portfolio-item wow fadeIn" data-wow-delay="0.4s" data-groups='["all", "print", "design"]'>
-              <div class="portfolio gallery-image-hover portfolio-masonry-item">
-                <div class="dark-overlay"></div>
-                <img src="http://www.incognitothemes.com/scoda/assets/images/portfolio/grid/15.jpg" alt="">
-                <div class="portfolio-wrap">
-                  <div class="portfolio-description">
-                    <h3 class="portfolio-title">Flat Chart</h3>
-                    <a href="single-portfolio.html" class="links">Web Design</a> </div>
-                  <!--=== /.project-info ===-->
-                  <ul class="portfolio-details">
-                    <li><a class="alpha-lightbox" href="http://www.incognitothemes.com/scoda/assets/images/portfolio/grid/15.jpg"><i class="icofont icofont-search-1"></i></a></li>
-                    <li><a href="single-portfolio.html"><i class="icofont icofont-link-alt"></i></a></li>
-                  </ul>
-                </div>
-              </div>
-              <!--=== /.portfolio ===-->
-            </li>
-            <li class="portfolio-item wow fadeIn" data-wow-delay="0.5s" data-groups='["all", "design"]'>
-              <div class="portfolio gallery-image-hover portfolio-masonry-item">
-                <div class="dark-overlay"></div>
-                <img src="http://www.incognitothemes.com/scoda/assets/images/portfolio/grid/16.jpg" alt="">
-                <div class="portfolio-wrap">
-                  <div class="portfolio-description">
-                    <h3 class="portfolio-title">Leaf Design</h3>
-                    <a href="single-portfolio.html" class="links">Print Design</a> </div>
-                  <!--=== /.project-info ===-->
-                  <ul class="portfolio-details">
-                    <li><a class="alpha-lightbox" href="http://www.incognitothemes.com/scoda/assets/images/portfolio/grid/16.jpg"><i class="icofont icofont-search-1"></i></a></li>
-                    <li><a href="single-portfolio.html"><i class="icofont icofont-link-alt"></i></a></li>
-                  </ul>
-                </div>
-              </div>
-              <!--=== /.portfolio ===-->
-            </li>
-            <li class="portfolio-item wow fadeIn" data-wow-delay="0.6s" data-groups='["all", "design", "web"]'>
-              <div class="portfolio gallery-image-hover portfolio-masonry-item">
-                <div class="dark-overlay"></div>
-                <img src="http://www.incognitothemes.com/scoda/assets/images/portfolio/grid/17.jpg" alt="">
-                <div class="portfolio-wrap">
-                  <div class="portfolio-description">
-                    <h3 class="portfolio-title">Grocodile</h3>
-                    <a href="single-portfolio.html" class="links">Web Design</a> </div>
-                  <!--=== /.project-info ===-->
-                  <ul class="portfolio-details">
-                    <li><a class="alpha-lightbox" href="http://www.incognitothemes.com/scoda/assets/images/portfolio/grid/17.jpg"><i class="icofont icofont-search-1"></i></a></li>
-                    <li><a href="single-portfolio.html"><i class="icofont icofont-link-alt"></i></a></li>
-                  </ul>
-                </div>
-              </div>
-              <!--=== /.portfolio ===-->
-            </li>
-            <li class="portfolio-item wow fadeIn" data-wow-delay="0.7s" data-groups='["all", "design", "web"]'>
-              <div class="portfolio gallery-image-hover portfolio-masonry-item">
-                <div class="dark-overlay"></div>
-                <img src="http://www.incognitothemes.com/scoda/assets/images/portfolio/grid/18.jpg" alt="">
-                <div class="portfolio-wrap">
-                  <div class="portfolio-description">
-                    <h3 class="portfolio-title">John Flyer</h3>
-                    <a href="single-portfolio.html" class="links">Web Design</a> </div>
-                  <!--=== /.project-info ===-->
-                  <ul class="portfolio-details">
-                    <li><a class="alpha-lightbox" href="http://www.incognitothemes.com/scoda/assets/images/portfolio/grid/18.jpg"><i class="icofont icofont-search-1"></i></a></li>
-                    <li><a href="single-portfolio.html"><i class="icofont icofont-link-alt"></i></a></li>
-                  </ul>
-                </div>
-              </div>
-              <!--=== /.portfolio ===-->
-            </li>
-            <li class="portfolio-item wow fadeIn" data-wow-delay="0.8s" data-groups='["all", "design", "web"]'>
-              <div class="portfolio gallery-image-hover portfolio-masonry-item">
-                <div class="dark-overlay"></div>
-                <img src="http://www.incognitothemes.com/scoda/assets/images/portfolio/grid/19.jpg" alt="">
-                <div class="portfolio-wrap">
-                  <div class="portfolio-description">
-                    <h3 class="portfolio-title">Argan</h3>
-                    <a href="single-portfolio.html" class="links">Web Design</a> </div>
-                  <!--=== /.project-info ===-->
-                  <ul class="portfolio-details">
-                    <li><a class="alpha-lightbox" href="http://www.incognitothemes.com/scoda/assets/images/portfolio/grid/19.jpg"><i class="icofont icofont-search-1"></i></a></li>
-                    <li><a href="single-portfolio.html"><i class="icofont icofont-link-alt"></i></a></li>
-                  </ul>
-                </div>
-              </div>
-              <!--=== /.portfolio ===-->
-            </li>
-            <li class="portfolio-item wow fadeIn" data-wow-delay="0.9s" data-groups='["all", "design", "web"]'>
-              <div class="portfolio gallery-image-hover portfolio-masonry-item">
-                <div class="dark-overlay"></div>
-                <img src="http://www.incognitothemes.com/scoda/assets/images/portfolio/grid/20.jpg" alt="">
-                <div class="portfolio-wrap">
-                  <div class="portfolio-description">
-                    <h3 class="portfolio-title">Banana</h3>
-                    <a href="single-portfolio.html" class="links">Web Design</a> </div>
-                  <!--=== /.project-info ===-->
-                  <ul class="portfolio-details">
-                    <li><a class="alpha-lightbox" href="http://www.incognitothemes.com/scoda/assets/images/portfolio/grid/20.jpg"><i class="icofont icofont-search-1"></i></a></li>
-                    <li><a href="single-portfolio.html"><i class="icofont icofont-link-alt"></i></a></li>
-                  </ul>
-                </div>
-              </div>
-              <!--=== /.portfolio ===-->
-            </li>
+            {% endfor %}
           </ul>
         </div>
       </div>

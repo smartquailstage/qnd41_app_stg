@@ -2043,10 +2043,454 @@ class ResourceslistingPage(Page):
         InlinePanel('galleria_resources_Page', label="Imagenes de background"),
     ]
 
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        context["posts"] = ResourcesDetailPage.objects.live().public()
+        return context
+
 class galleria_resources_Page(Orderable):
     page = ParentalKey(ResourceslistingPage, on_delete=models.CASCADE, related_name='galleria_resources_Page')    
     image = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Banner')
 
     panels = [
         ImageChooserPanel('image'),
+    ]
+
+
+class comments_ResourcesDetailPage(AbstractFormField):
+    page = ParentalKey('ResourcesDetailPage', on_delete=models.CASCADE, related_name='form_fields')
+
+TAGS= ( 
+    ("Big Data", "Big Data"), 
+    ("Data Science","Data Science"), 
+    ("Machine Learning","Machine Learning"), 
+    ("Cloud Infrastructure","Cloud Infrastructure"), 
+    ("Intelligence Artificial","Intelligence Artificial"), 
+)
+
+class ResourcesDetailPage(AbstractEmailForm):
+    template = "webapp/resourcesdetail.html"
+    tags= models.CharField(max_length=100, choices = TAGS, null=True)
+    delay = models.CharField( max_length=100,blank=False,null=True, help_text='delay time' )
+    title_resource = models.CharField( max_length=100,blank=False,null=True, help_text='title_resource' )
+    category = models.CharField( max_length=100,blank=False,null=True, help_text='Article category' )
+
+
+    author = models.CharField(
+        max_length=100,
+        blank=False,
+        null=True,
+        help_text='Author Article',
+    )
+
+    bio2 = models.CharField(
+        max_length=500,
+        blank=False,
+        null=True,
+        help_text='Author bio',
+    )
+
+    custom_title = models.CharField(
+        max_length=100,
+        blank=False,
+        null=True,
+        help_text='Overwrites article title',
+    )
+    custom_subtitle = models.CharField(
+        max_length=100,
+        blank=False,
+        null=True,
+        help_text='Overwrites article subtitle',
+    )
+    blog_image = models.ForeignKey(
+        "wagtailimages.Image",
+        blank=False,
+        null=True,
+        related_name="+",
+        on_delete=models.SET_NULL,
+    )
+    date = models.DateTimeField(auto_now=True)
+    abstract = RichTextField(blank=True,verbose_name='Abstract')
+    comments = RichTextField(blank=True,verbose_name='Mensaje para que nos dejen un comentario')
+    thank_you_text = RichTextField(blank=True)
+
+    content = StreamField(
+        [
+            ("title_and_text", blocks.TitleAndTextBlock()),
+            ("full_richtext", blocks.RichtextBlock()),
+            ("simple_richtext", blocks.SimpleRichtextBlock()),
+            ('image', ImageChooserBlock()),
+            ("cards", blocks.CardBlock()),
+        ],
+        null=True,
+        blank=True,
+    )
+
+    content_panels = Page.content_panels + [
+        FieldPanel("category"),
+        FieldPanel("author"),
+        FieldPanel("tags"),
+        FieldPanel("delay"),
+        FieldPanel("title_resource"),
+        FieldPanel("bio2"),
+        FieldPanel("custom_title"),
+        FieldPanel("custom_subtitle"),
+        ImageChooserPanel("blog_image"),
+        InlinePanel('galleria_resourcedetail_Page', label="Imagenes de recursos"),
+        FieldPanel("abstract"),
+        StreamFieldPanel("content"),
+        FormSubmissionsPanel(),
+        InlinePanel('form_fields', label="comments"),
+        FieldPanel('thank_you_text', classname="full"),
+        MultiFieldPanel([
+            FieldRowPanel([
+                FieldPanel('from_address', classname="col6"),
+                FieldPanel('to_address', classname="col6"),
+            ]),
+            FieldPanel('subject'),
+        ], "Email"),
+    ]
+
+    def get_form_fields(self):
+        return self.form_fields.all()
+
+    def get_data_fields(self):
+        data_fields = [
+            ('name', 'Name'),
+        ]
+        data_fields += super().get_data_fields()
+
+        return data_fields
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+
+        # If you need to show results only on landing page,
+        # you may need check request.method
+
+        results = dict()
+        # Get information about form fields
+        data_fields = [
+            (field.clean_name, field.label)
+            for field in self.get_form_fields()
+        ]
+
+        # Get all submissions for current page
+        submissions = self.get_submission_class().objects.filter(page=self)
+        for submission in submissions:
+            data = submission.get_data()
+
+            # Count results for each question
+            for name, label in data_fields:
+                answer = data.get(name)
+                if answer is None:
+                    # Something wrong with data.
+                    # Probably you have changed questions
+                    # and now we are receiving answers for old questions.
+                    # Just skip them.
+                    continue
+
+                if type(answer) is list:
+                    # Answer is a list if the field type is 'Checkboxes'
+                    answer = u', '.join(answer)
+
+                question_stats = results.get(label, {})
+                question_stats[answer] = question_stats.get(answer, 0) + 1
+                results[label] = question_stats
+
+        context.update({
+            'results': results,
+        })
+        return context
+    
+class galleria_resourcedetail_Page(Orderable):
+    page = ParentalKey(ResourcesDetailPage, on_delete=models.CASCADE, related_name='galleria_resourcedetail_Page')    
+    image_1 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Banner')
+    image_2 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Author picture')
+    image_3 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='imagen 2')
+    
+    
+    panels = [
+        ImageChooserPanel('image_1'),
+        ImageChooserPanel('image_2'),
+        ImageChooserPanel('image_3')
+    ]
+
+
+class parnersPage(Page):
+    template = "webapp/parthers.html"
+
+    custom_title = models.CharField(
+        max_length=100,
+        blank=False,
+        null=False,
+        help_text='Overwrites the default title',
+    )
+
+    content_panels = Page.content_panels + [
+        FieldPanel("custom_title"),
+        InlinePanel('partners_item_Page', label="partners"),
+    ]
+
+class partners_Page(Orderable):
+    page = ParentalKey(parnersPage, on_delete=models.CASCADE, related_name='partners_item_Page')    
+    partner_name = models.CharField(max_length=100,blank=False,null=True,help_text='Partner Name')
+    partner_description = RichTextField(blank=True,verbose_name='Descripción del partner')
+    partner_image = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Partner logo')
+
+    
+    
+    panels = [
+        FieldPanel("partner_name"),
+        FieldPanel("partner_description"),
+        ImageChooserPanel('partner_image')
+    ]
+
+
+class aboutusPage(Page):
+    template = "webapp/aboutus.html"
+
+    custom_title = models.CharField(
+        max_length=100,
+        blank=False,
+        null=False,
+        help_text='Overwrites the default title',
+    )
+    aboutus= RichTextField(blank=True,verbose_name='SmartQuail Story')
+
+    content_panels = Page.content_panels + [
+        FieldPanel("custom_title"),
+        FieldPanel("aboutus"),
+        InlinePanel('aboutus_item_Page', label="teams"),
+    ]
+
+class aboutus_Page(Orderable):
+    page = ParentalKey(aboutusPage, on_delete=models.CASCADE, related_name='aboutus_item_Page')    
+    image_1 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='banner')
+    image_2 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='profile_picture_1')
+    image_3 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='profile_picture_2')
+    image_4 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='profile_picture_3')
+    image_5 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='profile_picture_4')
+    image_6 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='profile_picture_5')
+    image_7 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='profile_picture_6')
+    team1_name = models.CharField(max_length=100,blank=False,null=False,help_text='Team 1 Name')
+    team2_name = models.CharField(max_length=100,blank=False,null=False,help_text='Team 2 Name')
+    team3_name = models.CharField(max_length=100,blank=False,null=False,help_text='Team 3 Name')
+    team4_name = models.CharField(max_length=100,blank=False,null=False,help_text='Team 4 Name')
+    team1_position = models.CharField(max_length=100,blank=False,null=False,help_text='Team 1 position')
+    team2_position = models.CharField(max_length=100,blank=False,null=False,help_text='Team 2 position')
+    team3_position = models.CharField(max_length=100,blank=False,null=False,help_text='Team 3 position')
+    team4_position = models.CharField(max_length=100,blank=False,null=False,help_text='Team 4 position')
+
+    panels = [
+        ImageChooserPanel('image_1'),
+        ImageChooserPanel('image_2'),
+        ImageChooserPanel('image_3'),
+        ImageChooserPanel('image_4'),
+        ImageChooserPanel('image_5'),
+        ImageChooserPanel('image_6'),
+        ImageChooserPanel('image_7'),
+        FieldPanel("team1_name"),
+        FieldPanel("team2_name"),
+        FieldPanel("team3_name"),
+        FieldPanel("team4_name"),
+        FieldPanel("team1_position"),
+        FieldPanel("team2_position"),
+        FieldPanel("team3_position"),
+        FieldPanel("team4_position"),
+    ]
+
+
+PORFOLIO = ( 
+    ("Landscapes", "Landscapes"), 
+    ("Visual Production","Visual Production"), 
+    ("web content","web content"), 
+    ("Social Networks content","Social Networks content"), 
+    ("Web Desing","Web Desing"), 
+    ("Intelligence Artificial","Intelligence Artificial"), 
+)
+
+class ResumePage(Page):
+
+
+    template = "webapp/resume.html"
+
+    custom_title = models.CharField(
+        max_length=100,
+        blank=False,
+        null=False,
+        help_text='Nombre',
+    )
+
+    
+    porfolio_1 = models.CharField(max_length=100, choices = PORFOLIO, null=True)
+    porfolio_2 = models.CharField(max_length=100, choices = PORFOLIO, null=True)
+    porfolio_3 = models.CharField(max_length=100, choices = PORFOLIO, null=True)
+    porfolio_4 = models.CharField(max_length=100, choices = PORFOLIO, null=True)
+    aboutus= RichTextField(blank=True,verbose_name='Acerca de mi')
+    aboutus_1= RichTextField(blank=True,verbose_name='mensaje 1')
+    aboutus_2= RichTextField(blank=True,verbose_name='mensaje 2')
+    aboutus_3= RichTextField(blank=True,verbose_name='mensaje 3')
+    experience_mesange  = models.CharField( max_length=100, blank=False, null=True,help_text='Describir un mensaje de experiencia',)
+    educational_mesange  = models.CharField( max_length=100, blank=False, null=True,help_text='Describir un mensaje de la educación',)
+    image = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Foto de perfil')
+    resume_url = models.URLField()
+
+    content_panels = Page.content_panels + [
+        FieldPanel("custom_title"),
+        FieldPanel("aboutus"),
+        FieldPanel("aboutus_1"),
+        FieldPanel("aboutus_2"),
+        FieldPanel("aboutus_3"),
+        FieldPanel("porfolio_1"),
+        FieldPanel("porfolio_2"),
+        FieldPanel("porfolio_3"),
+        FieldPanel("porfolio_4"),
+        FieldPanel("experience_mesange"),
+        FieldPanel("educational_mesange"),
+        ImageChooserPanel('image'),
+        InlinePanel('porfolio_item_Page', label="porfolio"),
+        InlinePanel('experiece_item_Page', label="experience"),
+        InlinePanel('educational_item_Page', label="experience"),
+        InlinePanel('form_fields', label="form_fields"),
+        FieldPanel("resume_url"),
+    ]
+
+class Porfolio_Page(Orderable):
+    page = ParentalKey(ResumePage, on_delete=models.CASCADE, related_name='porfolio_item_Page')    
+    porfolio_title = models.CharField( max_length=100, blank=False, null=True,help_text='Titulo de porfolio',)
+    porfolio = models.CharField(max_length=100, choices = PORFOLIO, null=True)
+    image_1 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Imagen 1')
+ 
+
+    panels = [
+        FieldPanel("porfolio_title"),
+        FieldPanel("porfolio"),
+        ImageChooserPanel('image_1'),
+
+    ]
+
+class Experience_Page(Orderable):
+    page = ParentalKey(ResumePage, on_delete=models.CASCADE, related_name='experiece_item_Page')    
+    business_title = models.CharField( max_length=100, blank=False, null=True,help_text='Nombre de la empresa donde trabajo',)
+    business_chage = models.CharField( max_length=100, blank=False, null=True,help_text='Nombre del cargo que ocupo',)
+    business_activity = models.CharField( max_length=1000, blank=False, null=True,help_text='Descripcion de la actividad realizada',)
+    Fecha = models.DateTimeField()
+ 
+
+    panels = [
+        FieldPanel("business_title"),
+        FieldPanel("business_chage"),
+        FieldPanel("business_activity"),
+        FieldPanel("Fecha"),
+    ]
+
+class Educational_Page(Orderable):
+    page = ParentalKey(ResumePage, on_delete=models.CASCADE, related_name='educational_item_Page')    
+    academy_title = models.CharField( max_length=100, blank=False, null=True,help_text='Nombre de la institución educativa',)
+    title = models.CharField( max_length=100, blank=False, null=True,help_text='Nombre del titulo',)
+    academy_activity = models.CharField( max_length=1000, blank=False, null=True,help_text='Descripcion de la formación',)
+    Fecha = models.DateTimeField()
+ 
+
+    panels = [
+        FieldPanel("academy_title"),
+        FieldPanel("title"),
+        FieldPanel("academy_activity"),
+        FieldPanel("Fecha"),
+    ]
+
+class contact_form_resume_Page(AbstractFormField):
+    page = ParentalKey('ResumePage', on_delete=models.CASCADE, related_name='form_fields')
+
+
+
+
+
+@register_setting
+class SocialMediaTeam1Settings(BaseSetting):
+    facebook = models.URLField(blank=True,null=True,help_text="")
+    twitter = models.URLField(blank=True,null=True,help_text="")
+    instagram = models.URLField(blank=True,null=True,help_text="")
+    youtube = models.URLField(blank=True,null=True,help_text="")
+    pinterest = models.URLField(blank=True,null=True,help_text="")
+    linkedin = models.URLField(blank=True,null=True,help_text="")
+
+    panels = [
+        MultiFieldPanel(
+            [
+            FieldPanel("facebook"),
+            FieldPanel("twitter"),
+            FieldPanel("instagram"),
+            FieldPanel("youtube"),  
+            FieldPanel("pinterest"),
+            FieldPanel("linkedin"),         
+            ]
+        ,heading= "Social Media Settings")
+    ]
+
+@register_setting
+class SocialMediaTeam2Settings(BaseSetting):
+    facebook = models.URLField(blank=True,null=True,help_text="")
+    twitter = models.URLField(blank=True,null=True,help_text="")
+    instagram = models.URLField(blank=True,null=True,help_text="")
+    youtube = models.URLField(blank=True,null=True,help_text="")
+    pinterest = models.URLField(blank=True,null=True,help_text="")
+    linkedin = models.URLField(blank=True,null=True,help_text="")
+
+    panels = [
+        MultiFieldPanel(
+            [
+            FieldPanel("facebook"),
+            FieldPanel("twitter"),
+            FieldPanel("instagram"),
+            FieldPanel("youtube"),  
+            FieldPanel("pinterest"),
+            FieldPanel("linkedin"),         
+            ]
+        ,heading= "Social Media Settings")
+    ]
+
+@register_setting
+class SocialMediaTeam3Settings(BaseSetting):
+    facebook = models.URLField(blank=True,null=True,help_text="")
+    twitter = models.URLField(blank=True,null=True,help_text="")
+    instagram = models.URLField(blank=True,null=True,help_text="")
+    youtube = models.URLField(blank=True,null=True,help_text="")
+    pinterest = models.URLField(blank=True,null=True,help_text="")
+    linkedin = models.URLField(blank=True,null=True,help_text="")
+
+    panels = [
+        MultiFieldPanel(
+            [
+            FieldPanel("facebook"),
+            FieldPanel("twitter"),
+            FieldPanel("instagram"),
+            FieldPanel("youtube"),  
+            FieldPanel("pinterest"),
+            FieldPanel("linkedin"),         
+            ]
+        ,heading= "Social Media Settings")
+    ]
+
+@register_setting
+class SocialMediaTeam4Settings(BaseSetting):
+    facebook = models.URLField(blank=True,null=True,help_text="")
+    twitter = models.URLField(blank=True,null=True,help_text="")
+    instagram = models.URLField(blank=True,null=True,help_text="")
+    youtube = models.URLField(blank=True,null=True,help_text="")
+    pinterest = models.URLField(blank=True,null=True,help_text="")
+    linkedin = models.URLField(blank=True,null=True,help_text="")
+
+    panels = [
+        MultiFieldPanel(
+            [
+            FieldPanel("facebook"),
+            FieldPanel("twitter"),
+            FieldPanel("instagram"),
+            FieldPanel("youtube"),  
+            FieldPanel("pinterest"),
+            FieldPanel("linkedin"),         
+            ]
+        ,heading= "Social Media Settings")
     ]

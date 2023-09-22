@@ -58,11 +58,21 @@
           <div class="col-md-6 col-xs-12">
             <ul class="social-media">
               <li><img src="{% static 'img/logo.png' %}" width="35px"></li>
-              <li><a href="index.html#" class="icofont icofont-link-altedin"></a></li>
-              <li><a href="index.html#" class="icofont icofont-facebook"></a></li>
-              <li><a href="index.html#" class="icofont icofont-twitter"></a></li>
-              <li><a href="index.html#" class="icofont icofont-pinterest"></a></li>
-              <li><a href="index.html#" class="icofont icofont-instagram"></a></li>
+              {% if settings.webapp.SocialMediaSettings.facebook %}
+              <li> <a href="{{ settings.webapp.SocialMediaSettings.facebook}}"><i class="icofont icofont-facebook"></i></a> </li>
+              {% endif %}
+              {% if settings.webapp.SocialMediaSettings.twitter %}
+              <li> <a href="{{ settings.webapp.SocialMediaSettings.twitter }}"><i class="icofont icofont-twitter"></i></a> </li>
+              {% endif %}
+              {% if settings.webapp.SocialMediaSettings.linkedin %}
+              <li> <a href="{{ settings.webapp.SocialMediaSettings.linkedin}}"><i class="icofont icofont-linkedin"></i></a> </li>
+              {% endif %}
+              {% if settings.webapp.SocialMediaSettings.youtube %}
+              <li> <a href="{{ settings.webapp.SocialMediaSettings.youtube }}"><i class="icofont icofont-youtube"></i></a> </li>
+              {% endif %}
+              {% if settings.webapp.SocialMediaSettings.instagram %}
+              <li> <a href="{{ settings.webapp.SocialMediaSettings.instagram  }}"><i class="icofont icofont-instagram "></i></a> </li>
+              {% endif %}
             </ul>
           </div>
           <div class="col-md-6 col-xs-12">
