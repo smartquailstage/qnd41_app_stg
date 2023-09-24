@@ -2310,7 +2310,10 @@ PORFOLIO = (
     ("Intelligence Artificial","Intelligence Artificial"), 
 )
 
-class ResumePage(Page):
+class contact_form_resume_Page(AbstractFormField):
+    page = ParentalKey('ResumePage', on_delete=models.CASCADE, related_name='form_fields')
+
+class ResumePage(AbstractEmailForm):
 
 
     template = "webapp/resume.html"
@@ -2334,6 +2337,8 @@ class ResumePage(Page):
     experience_mesange  = models.CharField( max_length=100, blank=False, null=True,help_text='Describir un mensaje de experiencia',)
     educational_mesange  = models.CharField( max_length=100, blank=False, null=True,help_text='Describir un mensaje de la educación',)
     image = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Foto de perfil')
+    comments = RichTextField(blank=True,verbose_name='Mensaje para que nos dejen un comentario')
+    thank_you_text = RichTextField(blank=True)
     resume_url = models.URLField()
 
     content_panels = Page.content_panels + [
@@ -2346,14 +2351,22 @@ class ResumePage(Page):
         FieldPanel("porfolio_2"),
         FieldPanel("porfolio_3"),
         FieldPanel("porfolio_4"),
+        FieldPanel("resume_url"),
         FieldPanel("experience_mesange"),
         FieldPanel("educational_mesange"),
         ImageChooserPanel('image'),
         InlinePanel('porfolio_item_Page', label="porfolio"),
         InlinePanel('experiece_item_Page', label="experience"),
         InlinePanel('educational_item_Page', label="experience"),
-        InlinePanel('form_fields', label="form_fields"),
-        FieldPanel("resume_url"),
+        InlinePanel('form_fields', label="comments"),
+        FieldPanel('thank_you_text', classname="full"),
+        MultiFieldPanel([
+            FieldRowPanel([
+                FieldPanel('from_address', classname="col6"),
+                FieldPanel('to_address', classname="col6"),
+            ]),
+            FieldPanel('subject'),
+        ], "Email"),
     ]
 
 class Porfolio_Page(Orderable):
@@ -2400,8 +2413,7 @@ class Educational_Page(Orderable):
         FieldPanel("Fecha"),
     ]
 
-class contact_form_resume_Page(AbstractFormField):
-    page = ParentalKey('ResumePage', on_delete=models.CASCADE, related_name='form_fields')
+
 
 
 
