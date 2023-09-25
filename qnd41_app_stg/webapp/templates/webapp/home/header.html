@@ -9,34 +9,34 @@
 
   <!--=== Header Start ===-->
   <nav class="navbar navbar-default navbar-fixed navbar-transparent white bootsnav on no-full">
-    <!--=== Start Top Search ===-->
+    <!--=== 
     <div class="fullscreen-search-overlay" id="search-overlay"> <a href="index.html#" class="fullscreen-close" id="fullscreen-close-button"><i class="icofont icofont-close"></i></a>
       <div id="fullscreen-search-wrapper">
-                    <!--=== Form ===-->
+                   
                     <form method="post" class="form login_type text-center" id="fullscreen-searchform" >
-                      <!--=== Username ===-->
+                     
                       <input type="text" name="username" class="form-control mb-20" placeholder="Username">
-                      <!--=== Password ===-->
+                
                       <input type="password" name="password" class="form-control mb-20" placeholder="Password">
-                      <!--=== Submit ===-->
+                  
                       <button type="submit" name="login" class="btn btn-color btn-circle full-width">LOGIN</button>
-                      <!--=== Signup Text ===-->
+                    
                       <h6 class="mt-20 gray-light"> DON'T HAVE AN ACCOUNT? </h6>
-                      <!--=== Signup Button ===-->
+                  
                       <a href="login.html#">SIGN UP <i class="fa fa-angle-double-right"></i> </a>
                     </form>
-                    <!--=== End Form ===-->
+                  
                  
       
       </div>
     </div>
-    <!--=== End Top Search ===-->
+  ===-->
 
     <div class="container">
       <!--=== Start Atribute Navigation ===-->
       <div class="attr-nav">
         <ul>
-          <li class="dropdown"> <a href="index.html#" class="dropdown-toggle" data-toggle="dropdown" > <i class="icofont icofont-earth"></i>  </a>
+          <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" > <i class="icofont icofont-earth"></i>  </a>
             <ul class="dropdown-menu cart-list">
               <li>
                 {% for language_code, language_name in LANGUAGES %}
@@ -60,7 +60,7 @@
       <!--=== Start Header Navigation ===-->
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu"> <i class="icofont icofont-navigation-menu"></i> </button>
-        <div class="logo"> <a href="index.html"> <img class="logo logo-display" src="{% static 'img/logo_smartquailWhite.png' %}" alt=""> 
+        <div class="logo"> <a href="{% slugurl 'home' %}"> <img class="logo logo-display" src="{% static 'img/logo_smartquailWhite.png' %}" alt=""> 
           <img class="logo logo-scrolled"  src="{% static 'img/logoSQ_responsive.png' %}" alt=""> </a> </div>
       </div>
       <!--=== End Header Navigation ===-->
@@ -68,7 +68,7 @@
       <!--=== Collect the nav links, forms, and other content for toggling ===-->
       <div class="collapse navbar-collapse" id="navbar-menu">
         <ul class="nav navbar-nav" data-in="fadeIn" data-out="fadeOut">
-          <li class="dropdown megamenu-fw"> <a href="index.html" class="dropdown-toggle" data-toggle="dropdown">{% trans 'Products' %}</a>
+          <li class="dropdown megamenu-fw"> <a href="{% slugurl 'home' %}" class="dropdown-toggle" data-toggle="dropdown">{% trans 'Products' %}</a>
             <ul class="dropdown-menu megamenu-content" role="menu">
               <li>
                 <div class="row">
@@ -114,7 +114,7 @@
               </li>
             </ul>
           </li>
-          <li class="dropdown megamenu-fw"> <a href="index.html" class="dropdown-toggle" data-toggle="dropdown">{% trans 'Solutions' %}</a>
+          <li class="dropdown megamenu-fw"> <a href="{% slugurl 'home' %}" class="dropdown-toggle" data-toggle="dropdown">{% trans 'Solutions' %}</a>
             <ul class="dropdown-menu megamenu-content" role="menu">
               <li>
                 <div class="row">
@@ -152,7 +152,7 @@
               </li>
             </ul>
           </li>
-          <li class="dropdown megamenu-fw"> <a href="index.html" class="dropdown-toggle" data-toggle="dropdown">{% trans 'Training & Jobs' %}</a>
+          <li class="dropdown megamenu-fw"> <a href="{% slugurl 'home' %}" class="dropdown-toggle" data-toggle="dropdown">{% trans 'Training & Jobs' %}</a>
             <ul class="dropdown-menu megamenu-content" role="menu">
               <li>
                 <div class="row">
@@ -179,7 +179,7 @@
               </li>
             </ul>
           </li>
-          <li class="dropdown megamenu-fw"> <a href="index.html" class="dropdown-toggle" data-toggle="dropdown">{% trans 'Resources' %}</a>
+          <li class="dropdown megamenu-fw"> <a href="{% slugurl 'home' %}" class="dropdown-toggle" data-toggle="dropdown">{% trans 'Resources' %}</a>
             <ul class="dropdown-menu megamenu-content" role="menu">
               <li>
                 <div class="row">
@@ -225,7 +225,7 @@
               </li>
             </ul>
           </li>
-          <li class="dropdown megamenu-fw"> <a href="index.html" class="dropdown-toggle" data-toggle="dropdown">{% trans 'Partners' %}</a>
+          <li class="dropdown megamenu-fw"> <a href="{% slugurl 'home' %}" class="dropdown-toggle" data-toggle="dropdown">{% trans 'Partners' %}</a>
             <ul class="dropdown-menu megamenu-content" role="menu">
               <li>
                 <div class="row">
@@ -252,7 +252,7 @@
               </li>
             </ul>
           </li>
-          <li class="dropdown megamenu-fw"> <a href="index.html" class="dropdown-toggle" data-toggle="dropdown">{% trans 'About' %}</a>
+          <li class="dropdown megamenu-fw"> <a href="{% slugurl 'home' %}" class="dropdown-toggle" data-toggle="dropdown">{% trans 'About' %}</a>
             <ul class="dropdown-menu megamenu-content" role="menu">
               <li>
                 <div class="row">

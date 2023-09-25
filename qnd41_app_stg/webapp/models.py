@@ -65,7 +65,7 @@ class home(AbstractEmailForm):
    # banner_info3 = RichTextField(blank=True,verbose_name='Informacion del tercer banner ')
 
     # Empieza Banner de sliders
-    bio = RichTextField(blank=True,verbose_name='rseña bibliografica')
+    bio = RichTextField(blank=True,verbose_name='reseña bibliografica')
 
     banner_title4 = RichTextField(blank=True,verbose_name='Titulo de galeria-1 ')
     TS_info1 = models.CharField(max_length=150, null=True, blank=True,verbose_name='Subtitulo info')
@@ -228,26 +228,7 @@ class GaleriaHome(Orderable):
     image_4 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Imagen Slide Banner 4')
     image_5 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Imagen Slide Banner 5')
     image_6 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Imagen Slide Banner 6')
-    image_7 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Imagen product 1')
-    image_8 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Imagen product 2')
-    image_9 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Imagen product 3')
-    image_10 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Imagen product 4')
-    image_11 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Imagen product 5')
-    image_12 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Imagen product 6')
-    image_13 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Imagen team 1')
-    image_14 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Imagen team 2')
-    image_15 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Imagen team 3')
-    image_16 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Imagen team 4')
-    image_17 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='logo_parther')
-    image_18 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='logo_parther')
-    image_19 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='logo_parther')
-    image_20 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='logo_parther')
-    image_21 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='logo_parther')
-    image_22 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='logo_parther')
-    image_23 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='logo_parther')
-    image_24 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='logo_parther')
-    image_25 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='logo_parther')
-    image_26 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='logo_parther')
+
 
     panels = [
         ImageChooserPanel('logo'),
@@ -258,26 +239,7 @@ class GaleriaHome(Orderable):
         ImageChooserPanel('image_4'),
         ImageChooserPanel('image_5'),
         ImageChooserPanel('image_6'),
-        ImageChooserPanel('image_7'),
-        ImageChooserPanel('image_8'),
-        ImageChooserPanel('image_9'),
-        ImageChooserPanel('image_10'),
-        ImageChooserPanel('image_11'),
-        ImageChooserPanel('image_12'),
-        ImageChooserPanel('image_13'),
-        ImageChooserPanel('image_14'),
-        ImageChooserPanel('image_15'),
-        ImageChooserPanel('image_16'),
-        ImageChooserPanel('image_17'),
-        ImageChooserPanel('image_18'),
-        ImageChooserPanel('image_19'),
-        ImageChooserPanel('image_20'),
-        ImageChooserPanel('image_21'),
-        ImageChooserPanel('image_22'),
-        ImageChooserPanel('image_23'),
-        ImageChooserPanel('image_24'),
-        ImageChooserPanel('image_25'),
-        ImageChooserPanel('image_26'),
+
     ]
 
 
