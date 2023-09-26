@@ -92,7 +92,7 @@ INSTALLED_APPS = [
     'django_social_share',
     'streams',
     'widget_tweaks',
-    'wagtailcaptcha',
+   # 'wagtailcaptcha',
    #SMARTQUAIL-BUSINESS-CONSULTING
     'shop',
     'services',
