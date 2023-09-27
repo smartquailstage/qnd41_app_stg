@@ -1,8 +1,8 @@
 version: '3.9'
 
 services:
-  qnd40_app_stg:
-    image: smartquail/qnd40_app_stg:latest
+  qnd41_app_stg:
+    image: smartquail/qnd41_app_stg:latest
     restart: unless-stopped
     environment:
       - PORT=9000
@@ -15,29 +15,29 @@ services:
     ports:
       - "9000:9000"
     volumes:
-      - static-data-qnd40:/qnd40_app_stg/qnd40_app_stg/qnd40_app_stg/staticfiles
-      - static-data-qnd40:/qnd40_app_stg/qnd40_app_stg/qnd40_app_stg/media
-      - static-data-qnd40:/qnd40_app_stg/qnd40_app_stg/qnd40_app_stg/static
+      - static-data-qnd41:/qnd41_app_stg/qnd41_app_stg/qnd41_app_stg/staticfiles
+      - static-data-qnd41:/qnd41_app_stg/qnd41_app_stg/qnd41_app_stg/media
+      - static-data-qnd41:/qnd41_app_stg/qnd41_app_stg/qnd41_app_stg/static
     networks: 
       - lansmartquail
    # command: sh -c "chmod +x /scripts/migrations.sh && sh /scripts/migrations.sh && sh /scripts/run.sh"
 
   qnode41_proxy:
-    image: smartquail/qnd40_nginx:dev
+    image: smartquail/qnd41_nginx:dev
     restart: always
     env_file:
       - .env_stage
     environment:
       - PORT=80
     depends_on:
-      - qnd40_app_stg
+      - qnd41_app_stg
     ports:
       - "80:80"
       - "443:443"
     volumes: 
-      - static-data-qnd40:/qnd40_app_stg/qnd40_app_stg/qnd40_app_stg/staticfiles
-      - static-data-qnd40:/qnd40_app_stg/qnd40_app_stg/qnd40_app_stg/media
-      - static-data-qnd40:/qnd40_app_stg/qnd40_app_stg/qnd40_app_stg/static
+      - static-data-qnd41:/qnd41_app_stg/qnd41_app_stg/qnd41_app_stg/staticfiles
+      - static-data-qnd41:/qnd41_app_stg/qnd41_app_stg/qnd41_app_stg/media
+      - static-data-qnd41:/qnd41_app_stg/qnd41_app_stg/qnd41_app_stg/static
     networks: 
       - lansmartquail
 
@@ -72,7 +72,7 @@ services:
 volumes:
   smartquaildb_data:
   redis_data:
-  static-data-qnd40:
+  static-data-qnd41:
 
 networks: 
    lansmartquail:
