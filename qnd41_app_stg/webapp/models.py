@@ -2400,7 +2400,7 @@ class SocialMediaTeam1Settings(BaseSetting):
             FieldPanel("pinterest"),
             FieldPanel("linkedin"),         
             ]
-        ,heading= "Social Media Settings")
+        ,heading= "Social Media Settings-1")
     ]
 
 @register_setting
@@ -2422,7 +2422,7 @@ class SocialMediaTeam2Settings(BaseSetting):
             FieldPanel("pinterest"),
             FieldPanel("linkedin"),         
             ]
-        ,heading= "Social Media Settings")
+        ,heading= "Social Media Settings-2")
     ]
 
 @register_setting
@@ -2444,7 +2444,7 @@ class SocialMediaTeam3Settings(BaseSetting):
             FieldPanel("pinterest"),
             FieldPanel("linkedin"),         
             ]
-        ,heading= "Social Media Settings")
+        ,heading= "Social Media Settings-3")
     ]
 
 @register_setting
@@ -2466,5 +2466,5 @@ class SocialMediaTeam4Settings(BaseSetting):
             FieldPanel("pinterest"),
             FieldPanel("linkedin"),         
             ]
-        ,heading= "Social Media Settings")
+        ,heading= "Social Media Settings-4")
     ]
