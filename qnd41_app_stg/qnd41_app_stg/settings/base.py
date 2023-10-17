@@ -63,8 +63,8 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     #Wagtail Inicials
     'core',
-    'wagtail.locales',
-    #'wagtail_localize.locales',
+    #'wagtail.locales',
+    'wagtail_localize.locales',
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
     'wagtail.embeds',
@@ -79,12 +79,12 @@ INSTALLED_APPS = [
  
      
     #'wagtail.locales',
-    'wagtail.contrib.simple_translation',
+    #'wagtail.contrib.simple_translation',
     'wagtail.admin',
     'wagtail.contrib.settings',
     'wagtail.contrib.routable_page',
     'wagtail.contrib.modeladmin',
-    'wagalytics',
+    #'wagalytics',
     'wagtailfontawesome',
     'wagtailgmaps',
     'wagtailmenus',
