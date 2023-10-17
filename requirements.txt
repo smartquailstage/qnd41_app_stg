@@ -10,7 +10,7 @@ wagalytics==1.3
 requests
 celery
 #gunicorn
-uWSGI==2.0.20
+uWSGI==2.0.22
 redis
 django-dotenv
 psycopg2-binary
@@ -36,6 +36,8 @@ django-parler
 django-localflavor
 django-rosetta
 wagtail-localize
+wagtailmenus
+
 
 
 boto3
