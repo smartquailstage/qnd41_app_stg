@@ -1756,7 +1756,7 @@ class galleria_article_Page(Orderable):
     ]
 
 @register_setting
-class SocialMediaSettings(BaseSetting):
+class SocialMediaArticleSettings(BaseSetting):
     facebook = models.URLField(blank=True,null=True,help_text="")
     twitter = models.URLField(blank=True,null=True,help_text="")
     instagram = models.URLField(blank=True,null=True,help_text="")
@@ -1774,7 +1774,7 @@ class SocialMediaSettings(BaseSetting):
             FieldPanel("pinterest"),
             FieldPanel("linkedin"),         
             ]
-        ,heading= "Social Media Settings")
+        ,heading= "Social Media Settings Article")
     ]
 
 JOBS= ( 
