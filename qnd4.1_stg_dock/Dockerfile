@@ -1,4 +1,4 @@
-FROM python:3.11.3-alpine3.18
+FROM python:3.10-alpine3.17
 LABEL maintainer="mau_dev@smartquail.io"
 
 ENV PYTHONUNBUFFERED 1
@@ -35,7 +35,7 @@ EXPOSE 9000
 #EXPOSE 587
 
 
-RUN python  -m venv --python=python3.11 /py && \
+RUN python -m venv /py && \
     /py/bin/pip install --upgrade pip && \
     apk add --update --no-cache postgresql-client && \
     apk add --update --no-cache --virtual .tmp-deps && \
