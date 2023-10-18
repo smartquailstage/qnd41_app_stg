@@ -9,7 +9,7 @@ AWS_S3_OBJECT_PARAMETERS={
     "ACL": "public-read"
 }
 
-AWS_LOCATION="https://qnd41-staticfiles.sfo3.digitaloceanspaces.com"
+AWS_LOCATION="https://qnd41-staticfiles.nyc3.digitaloceanspaces.com"
 #STATIC_URL = f'https://{AWS_S3_ENDPOINT_URL}/static/'
 DEFAULT_FILE_STORAGE="qnd41_app_prod.settings.cdn.backends.MediaRootS3BotoStorage"
 STATICFILES_STORAGE="qnd41_app_prod.settings.cdn.backends.StaticRootS3BotoStorage"
