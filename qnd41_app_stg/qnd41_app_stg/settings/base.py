@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'storages',
     #Wagtail Inicials
     'core',
     #'wagtail.locales',
@@ -139,7 +140,6 @@ INSTALLED_APPS = [
     #'students',
     'embed_video',
     'qr_code',
-    'storages',
 #    'actions',
     'solutions_blog',
     

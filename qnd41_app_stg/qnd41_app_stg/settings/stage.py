@@ -4,7 +4,7 @@ from .base import *
 ENV_FILE_PATH = BASE_DIR / ".env_stage"
 load_dotenv(str(ENV_FILE_PATH))
 
-DEBUG=  "1"
+DEBUG=  "0"
 
 
 
@@ -231,6 +231,8 @@ BATON = {
 }
 
 
+
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -280,6 +282,7 @@ STATICFILES_DIRS = [
 ]
 
 from .cdn.conf import * #noqa
+
 
 #Static files DevMod
 
