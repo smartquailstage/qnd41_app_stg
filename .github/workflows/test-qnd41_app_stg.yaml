@@ -15,7 +15,7 @@ jobs:
       NAME_DB: node0db
       PASSWORD_DB: smartquailadmindb
       USER_DB: smartquailadmin
-      HOST_DB: smartquaildd
+      HOST_DB: smartquaildb
       PORT_DB: 5432 
       DB_IGNORE_SSL: "true"
     
