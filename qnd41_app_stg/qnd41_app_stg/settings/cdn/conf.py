@@ -12,8 +12,8 @@ AWS_S3_OBJECT_PARAMETERS={
 }
 AWS_S3_REGION_NAME = os.environ.get("AWS_S3_REGION_NAME")
 AWS_LOCATION="https://{ AWS_STORAGE_BUCKET_NAME }.{ AWS_S3_REGION_NAME }.digitaloceanspaces.com"
-DEFAULT_FILE_STORAGE="{ APP_NAME }.settings.cdn.backends.MediaRootS3BotoStorage"
-STATICFILES_STORAGE="{ APP_NAME }.settings.cdn.backends.StaticRootS3BotoStorage"
+DEFAULT_FILE_STORAGE="qnd41_app_stg.settings.cdn.backends.MediaRootS3BotoStorage"
+STATICFILES_STORAGE="qnd41_app_stg.settings.cdn.backends.StaticRootS3BotoStorage"
 
 
 
