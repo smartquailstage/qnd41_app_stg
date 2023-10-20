@@ -14,6 +14,7 @@ AWS_S3_REGION_NAME = os.environ.get("AWS_S3_REGION_NAME")
 AWS_LOCATION="https://qnd41-app-staticfiles.nyc3.digitaloceanspaces.com"
 DEFAULT_FILE_STORAGE="qnd41_app_stg.settings.cdn.backends.MediaRootS3BotoStorage"
 STATICFILES_STORAGE="qnd41_app_stg.settings.cdn.backends.StaticRootS3BotoStorage"
+AWS_QUERYSTRING_AUTH="False"
 
 
 
