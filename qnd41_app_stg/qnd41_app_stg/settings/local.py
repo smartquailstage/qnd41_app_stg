@@ -2,7 +2,8 @@ from .base import *
 
 DEBUG=  "1"
 
-
+ENV_FILE_PATH = BASE_DIR / ".env_stage"
+load_dotenv(str(ENV_FILE_PATH))
 
 
 DATABASES = {
