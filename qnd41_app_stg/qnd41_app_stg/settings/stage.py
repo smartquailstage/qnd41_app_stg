@@ -267,7 +267,7 @@ if DB_IS_AVIAL and POSTGRES_READY:
 }
 
 AWS_S3_CUSTOM_DOMAIN = os.environ.get("AWS_S3_CUSTOM_DOMAIN")
-MEDIA_URL = "/media/"
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
 MEDIA_ROOT  = os.path.join(BASE_DIR, 'mediafiles')
 #STATICFILES_DIRS = [BASE_DIR / "staticfiles"]  
 #STATIC_ROOT = STATIC_ROOT = BASE_DIR / "static"
@@ -281,6 +281,7 @@ STATICFILES_DIRS = [
     BASE_DIR / "static"
 ]
 
+STATICFILES_STORAGE = os.environ.get("STATICFILES_STORAGE")
 from .cdn.conf import * #noqa
 
 
