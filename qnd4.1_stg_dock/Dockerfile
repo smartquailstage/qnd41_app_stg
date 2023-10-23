@@ -35,7 +35,7 @@ EXPOSE 9000
 #EXPOSE 587
 
 
-RUN python -m venv /py && \
+RUN python3.11 -m venv /py && \
     /py/bin/pip install --upgrade pip && \
     apk add --update --no-cache postgresql-client && \
     apk add --update --no-cache --virtual .tmp-deps && \
