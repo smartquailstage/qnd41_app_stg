@@ -266,7 +266,7 @@ if DB_IS_AVIAL and POSTGRES_READY:
     }
 }
 
-
+AWS_S3_CUSTOM_DOMAIN = os.environ.get("AWS_S3_CUSTOM_DOMAIN")
 MEDIA_URL = "/media/"
 MEDIA_ROOT  = os.path.join(BASE_DIR, 'mediafiles')
 #STATICFILES_DIRS = [BASE_DIR / "staticfiles"]  
@@ -274,7 +274,7 @@ MEDIA_ROOT  = os.path.join(BASE_DIR, 'mediafiles')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
  #Deploy Project- Don`t touch 
-STATIC_URL = "/static/"
+STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
 STATIC_ROOT = BASE_DIR / "staticfiles-cdn"
 
 STATICFILES_DIRS = [
