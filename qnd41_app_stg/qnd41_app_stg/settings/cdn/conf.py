@@ -1,21 +1,19 @@
 import os
-APP_NAME=os.environ.get("APP_NAME")
-AWS_ACCESS_KEY=os.environ.get("AWS_ACCESS_KEY_ID")
-AWS_SECRET_ACCESS_KEY=os.environ.get("AWS_SECRET_ACCESS_KEY")
-#AWS_ACCESS_KEY= 'DO00DZXWWE3BKHHMG3NV'
-#AWS_SECRET_ACCESS_KEY= '6ZDJ/K4xQ5g/GDGb40x4ojTNfGZbn0N7xvZ4QFqJ96w'
-AWS_STORAGE_BUCKET_NAME=os.environ.get("AWS_STORAGE_BUCKET_NAME")
-AWS_S3_ENDPOINT_URL=os.environ.get("AWS_S3_ENDPOINT_URL")
+
+AWS_ACCESS_KEY="DO00H9RAWAG3RCAXZL4B"
+AWS_SECRET_ACCESS_KEY="NIoTCfQJWtl9se9b17CIFey5YM15lJsj7ULMovkGgok"
+AWS_STORAGE_BUCKET_NAME='qnode41'
+AWS_S3_ENDPOINT_URL="https://nyc3.digitaloceanspaces.com/"
 AWS_S3_OBJECT_PARAMETERS={
     "CacheControl": "max-age=86400", 
     "ACL": "public-read"
 }
-AWS_S3_REGION_NAME = os.environ.get("AWS_S3_REGION_NAME")
-AWS_LOCATION="static"
+
+AWS_LOCATION="https://qnode41.nyc3.digitaloceanspaces.com"
+#STATIC_URL = f'https://{AWS_S3_ENDPOINT_URL}/static/'
 DEFAULT_FILE_STORAGE="qnd41_app_stg.settings.cdn.backends.MediaRootS3BotoStorage"
 STATICFILES_STORAGE="qnd41_app_stg.settings.cdn.backends.StaticRootS3BotoStorage"
-#AWS_QUERYSTRING_AUTH="False"
-
+#STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 
 

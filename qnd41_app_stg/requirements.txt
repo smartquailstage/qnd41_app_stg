@@ -1,7 +1,7 @@
-django>=3.2,<4.1
+django>=3.2,<4.0
 django-baton
 #Wagtail
-wagtail==4.2
+wagtail==3.0.3
 
 django-social-share
 wagtailgmaps
@@ -36,8 +36,6 @@ django-parler
 django-localflavor
 django-rosetta
 wagtail-localize
-wagtailmenus
-
 
 
 boto3
