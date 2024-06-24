@@ -3879,7 +3879,7 @@ ul.footer-gallery li img {
     height: 100%;
     width: 100%;
     position: relative;
-    background-color: rgba(34, 34, 37, 0.45);
+    background-color:rgba(0, 0, 0, 0.77);
     z-index: 200;
 }
 

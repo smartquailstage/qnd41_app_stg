@@ -24,12 +24,12 @@ from wagtail.snippets.models import register_snippet
 from wagtail.core.fields import StreamField, RichTextField
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from wagtail.search import index
-from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField,  FORM_FIELD_CHOICES
+from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField,FORM_FIELD_CHOICES
 
 
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.contrib.forms.edit_handlers import FormSubmissionsPanel
-from wagtail.contrib.settings.models import BaseSetting, register_setting
+from wagtail.contrib.settings.models import BaseSetting,register_setting
 from django.urls import reverse
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
 from wagtail.images.blocks import ImageChooserBlock
@@ -616,7 +616,7 @@ class SocialMediaSettings(BaseSetting):
     twitter = models.URLField(blank=True,null=True,help_text="")
     instagram = models.URLField(blank=True,null=True,help_text="")
     youtube = models.URLField(blank=True,null=True,help_text="")
-    behance = models.URLField(blank=True,null=True,help_text="")
+   # behance = models.URLField(blank=True,null=True,help_text="")
     linkedin = models.URLField(blank=True,null=True,help_text="")
 
     panels = [
@@ -626,7 +626,7 @@ class SocialMediaSettings(BaseSetting):
             FieldPanel("twitter"),
             FieldPanel("instagram"),
             FieldPanel("youtube"),  
-            FieldPanel("behance"),
+         #   FieldPanel("behance"),
             FieldPanel("linkedin"),         
             ]
         ,heading= "Social Media Settings")
