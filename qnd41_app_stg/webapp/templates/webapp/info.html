@@ -203,10 +203,15 @@
           <div class="col-md-1"></div>
           <div class="col-md-6">
             <div class="cta-heading-right">
-              <p class="mt-20 content-text">{{ page.banner_title12 | richtext }}</p>
-              {% if settings.webapp.GlobalLinksSettings.contacus %}
-                <p class="mt-50"><a href="{{ settings.webapp.GlobalLinksSettings.contacus }}" class="btn btn-rounded btn-white">{% trans 'Contact Us' %}</a></p>
-              {% endif %}
+              {% for item in page.galleria_3.all %}
+              {% image item.logo_slide scale-100 as l1 %}
+              <img class="img-responsive" style="width: 580px; align-content: left;" src="{{ l1.url }}" alt=""/>
+            {% endfor %}
+            <h3 style="text-align: left; margin-left: 50px; color:rgb(199, 199, 199)">{{ page.title }}</h3>
+            
+                <p class="mt-50"><a href="{{ settings.webapp.GlobalLinksSettings.contacus }}" class="btn btn-rounded btn-white">{% trans 'Register Now, and create  your IT Cloud Business' %}</a></p>
+              
+        
             </div>
           </div>
         </div>
