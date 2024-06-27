@@ -1273,6 +1273,19 @@ button:focus {
     color: #fff;
 }
 
+
+.btn-orange {
+  color: #fff;
+  border-color: #b13e0c;
+  background-color: #e04502;
+}
+
+.btn-orange:hover, .btn-orange:active, .btn-orange:focus {
+  background-color: #f0733a;
+  border-color: #ad3700;
+  color: #fff;
+}
+
 .btn.btn-xs, .btn.btn-group-xs {
     padding: 0 16px;
     font-size: 10px;
