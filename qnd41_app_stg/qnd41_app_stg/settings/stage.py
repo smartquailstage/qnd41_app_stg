@@ -288,24 +288,15 @@ if DB_IS_AVIAL and POSTGRES_READY:
 #]
 
 
-from .cdn.conf import * #noqa
+#Static files DevMod
 
-#AWS_S3_CUSTOM_DOMAIN = os.environ.get("AWS_S3_CUSTOM_DOMAIN")
-#MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
-#MEDIA_ROOT  = os.path.join(BASE_DIR, 'mediafiles')
-#STATICFILES_DIRS = [BASE_DIR / "staticfiles"]  
-#STATIC_ROOT = STATIC_ROOT = BASE_DIR / "static"
+MEDIA_URL = "/media/"
+MEDIA_ROOT  = os.path.join(BASE_DIR, 'media')
+STATICFILES_DIRS = [BASE_DIR / "staticfiles"]  
+STATIC_URL = "/static/"
+STATIC_ROOT = STATIC_ROOT = BASE_DIR / "static"
 
-#DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
- #Deploy Project- Don`t touch 
-#STATIC_URL = "/static/" 
-#STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
-#STATIC_ROOT = BASE_DIR / "staticfiles   "
-
-#STATICFILES_DIRS = [
-#    BASE_DIR / "static"
-#]
-
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #STATICFILES_STORAGE = os.environ.get("STATICFILES_STORAGE")
 #from .cdn.conf import * #noqa
 
