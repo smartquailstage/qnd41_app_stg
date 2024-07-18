@@ -1,10 +1,14 @@
 import os
 from celery import Celery
 
-# set the default Django settings module for the 'celery' program.
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'qnd41_app_stg.settings.stage')
+# Establecer la configuración por defecto de Django para el programa 'celery'.
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'qnd41_app_stg.settings')
 
+# Crear una instancia de la aplicación Celery
 app = Celery('qnd41_app_stg')
 
+# Cargar la configuración de Celery desde el módulo de configuración de Django
 app.config_from_object('django.conf:settings', namespace='CELERY')
-app.autodiscover_tasks()
+
+# Autodescubrir tareas definidas en la aplicación Django
+app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
