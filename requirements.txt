@@ -11,11 +11,13 @@ wagtailmenus
 requests
 celery
 #gunicorn
-uWSGI==2.0.22
+uWSGI==2.0.26
 redis
 django-dotenv
 psycopg2-binary
 django-storages
+psycopg2
+django-celery-beat
 
 #Django Web App dependencies
 django-social-auth
