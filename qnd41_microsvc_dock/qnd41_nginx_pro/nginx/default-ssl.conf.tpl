@@ -5,7 +5,7 @@ upstream django {
 
 server {
     listen         443 ssl;
-    server_name    www.${DOMAIN} 209.38.128.153 127.0.0.1;
+    server_name    www.smartquail.io 209.38.128.153 127.0.0.1;
 
     ssl_certificate     /etc/letsencrypt/live/www.${DOMAIN}/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/www.${DOMAIN}/privkey.pem;
@@ -43,10 +43,10 @@ server {
 
 server {
     listen         443 ssl;
-    server_name    www.${DOMAIN} 209.38.128.153;
+    server_name    www.smartquail.io 209.38.128.153;
 
-    ssl_certificate     /etc/letsencrypt/live/www.${DOMAIN}/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/www.${DOMAIN}/privkey.pem;
+    ssl_certificate     /etc/letsencrypt/live/www.smartquail.io/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/www.smartquail.io/privkey.pem;
 
     include     /etc/nginx/options-ssl-nginx.conf;
 
@@ -72,7 +72,7 @@ server {
 
     location / {
         uwsgi_pass qnd41app:9000;
-        add_header 'Access-Control-Allow-Origin' 'https://smartquail.io';
+        add_header 'Access-Control-Allow-Origin' 'https://www.smartquail.io';
         add_header Access-Control-Allow-Methods "GET, POST, OPTIONS";
         add_header Access-Control-Allow-Headers "Authorization, Content-Type, Accept";
         add_header Access-Control-Allow-Credentials "true";
